@@ -33,7 +33,7 @@ a { text-decoration: none; color: inherit; }
 .hero-portrait { width: 100%; height: 420px; object-fit: cover; object-position: top center; display: block; border-radius: 20px; }
 .section { padding: 50px 9%; border-top: 1px solid rgba(255,255,255,0.08); }
 .section-label { color: #ff923d; font-size: 11px; letter-spacing: 3px; margin-bottom: 10px; }
-.section-heading { margin-bottom: 20px; }
+.section-heading { margin-bottom: 8px; }
 .section h2 { font-size: clamp(35px, 6vw, 65px); line-height: 1.1; letter-spacing: -2px; }
 .section h2 span { color: #ff923d; }
 .section > p:not(.section-label) { margin-top: 22px; max-width: 650px; color: #929292; line-height: 1.9; font-size: 14px; }
@@ -81,15 +81,15 @@ footer p, footer > a:last-child { font-size: 10px; letter-spacing: 1px; color: #
 }
 @media (max-width: 650px) {
   .navbar { top: 10px; left: 3%; width: 94%; height: 65px; }
-  .hero { flex-direction: column; padding: 90px 7% 30px; align-items: flex-start; gap: 40px; }
+  .hero { flex-direction: column; padding: 20px 7% 10px; align-items: flex-start; gap: 40px; }
   .hero-image-wrapper { width: 260px; } .hero-portrait { height: 320px; }
   .hero h1 { font-size: clamp(65px, 15vw, 95px); } .hero h2 { font-size: 16px; }
   .scroll-indicator { margin-top: 35px; }
   .project-grid { grid-template-columns: 1fr; }
-  .section { padding: 30px 7%; }
+  .section { padding: 10px 7%; }
   footer { flex-direction: column; text-align: center; }
 }
-.cert-slider { display: flex; justify-content: center; margin-top: 10px; }
+.cert-slider { display: flex; justify-content: center; margin-top: 5px; }
 .cert-card { width: 100%; max-width: 650px; padding: 28px; border: 1px solid #252525; border-radius: 16px; background: linear-gradient(145deg, #151515, #090909); text-align: center; }
 .cert-card:hover { border-color: #ff923d; }
 .cert-card img { width: 100%; height: 380px; object-fit: contain; background: #fff; border-radius: 12px; display: block; cursor: zoom-in; }
