@@ -11,13 +11,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  navLinks.forEach(function (link) {
+    navLinks.forEach(function (link) {
     link.addEventListener("click", function (e) {
       const targetId = link.getAttribute("href");
       if (targetId && targetId.startsWith("#")) {
         e.preventDefault();
         const targetSection = document.querySelector(targetId);
-        if (targetSection) targetSection.scrollIntoView({ behavior: "smooth" });
+        const glass = document.getElementById("glassSlide");
+        if (glass) glass.classList.add("active");
+        setTimeout(function() {
+          if (targetSection) targetSection.scrollIntoView({ behavior: "auto" });
+          if (glass) {
+            glass.classList.add("slide-out");
+            setTimeout(function(){
+              glass.classList.remove("active", "slide-out");
+            }, 550);
+          }
+        }, 550);
         if (navLinksContainer) navLinksContainer.classList.remove("active");
       }
     });

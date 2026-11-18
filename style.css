@@ -192,3 +192,31 @@ footer p, footer > a:last-child { font-size: 10px; letter-spacing: 1px; color: #
     border: 1px solid rgba(255,255,255,0.25) !important;
   }
 }
+/* Pakka Glassy Slide - Mobile */
+#glassSlide {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border-left: 1px solid rgba(255,255,255,0.4);
+  transform: translateX(100%);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 9999;
+  pointer-events: none;
+}
+#glassSlide.active {
+  transform: translateX(0);
+}
+#glassSlide.slide-out {
+  transform: translateX(-100%);
+}
+
+/* Navbar hamesha glassy */
+.navbar {
+  background: rgba(255,255,255,0.15) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+}
