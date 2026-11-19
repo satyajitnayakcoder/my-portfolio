@@ -48,25 +48,28 @@ body.menu-open-body .menu-toggle {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    justify-content: flex-start !important;
     gap: 12px !important;
-    /* NO BG BOX - Bilkul transparent */
     background: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     border: none !important;
     box-shadow: none !important;
-    /* Pills Bilkul Bich Me */
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
     transform: none !important;
     width: 100% !important;
     max-width: none !important;
+    height: 100vh !important;
     height: 100dvh !important;
-    padding-top: calc(50dvh - 25px) !important;
-    padding-bottom: calc(50dvh - 25px) !important;
+    padding-top: 50vh !important;
+    padding-bottom: 50vh !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
+    margin: 0 !important;
     overflow-y: scroll !important;
     overflow-x: hidden !important;
     overscroll-behavior: auto !important;
@@ -91,7 +94,6 @@ body.menu-open-body .menu-toggle {
     will-change: transform !important;
     touch-action: pan-y !important;
   }
-  /* BICH WALA - Pop + White Border Glow */
   #navLinks a.pop {
     transform: scale(1.15) !important;
     background: rgba(255, 255, 255, 0.95) !important;

@@ -1,23 +1,40 @@
-// FULL JS - No BG, No Menu Bar, Sirf Pills Bich Me
+// FULL JS - Nav ko body me nikal kar BILKUL BICH ME, No BG, No Menu Bar
 document.addEventListener('DOMContentLoaded', function() {
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navLinks');
   if (!menuBtn || !navMenu) return;
 
+  // FIX: Nav ko header ke andar se nikal ke body me daal do
+  // Nahi toh header ka filter usko upar chipka deta hai
+  if (navMenu.parentElement !== document.body) {
+    document.body.appendChild(navMenu);
+  }
+
+  function centrePills() {
+    const first = navMenu.querySelector('a');
+    if (!first) return;
+    const h = window.innerHeight;
+    const pillH = first.offsetHeight || 50;
+    const pad = Math.max(0, (h / 2) - (pillH / 2));
+    navMenu.style.setProperty('padding-top', pad + 'px', 'important');
+    navMenu.style.setProperty('padding-bottom', pad + 'px', 'important');
+    navMenu.scrollTop = 0;
+    updateCenterPop();
+  }
+
   function openMenu() {
     navMenu.classList.add('menu-open');
     navMenu.style.setProperty('display', 'flex', 'important');
-    document.body.classList.add('menu-open-body'); // Menu bar gayab
-    menuBtn.textContent = '✕'; // 3 dot -> Cross
-    setTimeout(function() {
-      navMenu.scrollTop = 0;
-      updateCenterPop();
-    }, 80);
+    document.body.classList.add('menu-open-body');
+    menuBtn.textContent = '✕';
+    centrePills();
+    setTimeout(centrePills, 100);
+    setTimeout(centrePills, 300);
   }
   function closeMenu() {
     navMenu.classList.remove('menu-open');
     navMenu.style.setProperty('display', 'none', 'important');
-    document.body.classList.remove('menu-open-body'); // Menu bar wapas
+    document.body.classList.remove('menu-open-body');
     menuBtn.textContent = '☰';
   }
   function toggleMenu() {
@@ -85,6 +102,10 @@ document.addEventListener('DOMContentLoaded', function() {
   navMenu.addEventListener('wheel', function() {
     setTimeout(updateCenterPop, 50);
   }, { passive: true });
+
+  window.addEventListener('resize', function() {
+    if (navMenu.classList.contains('menu-open')) centrePills();
+  });
 
   const certModal = document.getElementById('certModal');
   const certImage = document.getElementById('certImage');
