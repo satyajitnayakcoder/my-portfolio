@@ -323,10 +323,19 @@ document.addEventListener("DOMContentLoaded", function () {
   padding: 50px 9% !important;
   text-align: center !important;
 }
+/* 07 BILKUL TOP-LEFT - ARROW WALI JAGAH */
+.contact-section {
+  position: relative !important;
+  padding: 70px 9% 60px 9% !important;
+  text-align: center !important;
+}
 .contact-section .section-label {
+  position: absolute !important;
+  top: 28px !important;
+  left: 9% !important;
   text-align: left !important;
   display: block !important;
-  width: 100% !important;
-  margin: 0 0 10px 0 !important;
+  margin: 0 !important;
   padding: 0 !important;
+  white-space: nowrap !important;
 }
