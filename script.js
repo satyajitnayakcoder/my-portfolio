@@ -1,121 +1,147 @@
-// ===== SCROLL-LINKED - Jitni speed scroll, utni speed animation =====
-// Typing nahi, Cursor nahi, Time animation nahi - Sirf Scroll se chalega
+// FULL JS - Menu Cross fix + Resume Google Viewer
 document.addEventListener('DOMContentLoaded', function() {
-  if (typeof gsap === 'undefined') return;
-  gsap.registerPlugin(ScrollTrigger);
+  const menuBtn = document.getElementById('menuBtn');
+  const navMenu = document.getElementById('navLinks');
+  if (!menuBtn || !navMenu) return;
 
-  // ---------- 1. WORDS KO APPEAR KE LIYE TAIYAR KARO ----------
-  const wordTargets = document.querySelectorAll(
-    '.hero h2, .hero-description, #about .section-heading h2, #about > p, #projects .section-heading h2, #skills .section-heading h2, #experience .section-heading h2, #certificates .section-heading h2, #resume .section-heading h2, #contact .section-heading h2, #contact > p'
-  );
-
-  function wrapWords(el) {
-    if (el.dataset.animateDone) return;
-    el.dataset.animateDone = '1';
-    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
-    const textNodes = [];
-    while (walker.nextNode()) textNodes.push(walker.currentNode);
-    textNodes.forEach(function(node) {
-      const text = node.textContent;
-      if (!text.trim()) return;
-      const frag = document.createDocumentFragment();
-      text.split(/(\s+)/).forEach(function(part) {
-        if (!part) return;
-        if (/^\s+$/.test(part)) {
-          frag.appendChild(document.createTextNode(part));
-        } else {
-          const s = document.createElement('span');
-          s.className = 'animate-word';
-          s.textContent = part;
-          frag.appendChild(s);
-        }
-      });
-      node.parentNode.replaceChild(frag, node);
-    });
-    el._words = el.querySelectorAll('.animate-word');
+  if (navMenu.parentElement !== document.body) {
+    document.body.appendChild(navMenu);
   }
-  wordTargets.forEach(wrapWords);
+  if (menuBtn.parentElement !== document.body) {
+    document.body.appendChild(menuBtn);
+  }
 
-  // ---------- 2. BOXES / IMAGES - Left / Right, SCROLL SPEED SE ----------
-  const revealItems = document.querySelectorAll(
-    '.hero-image-wrapper, .section-label, .section-heading, #about > p, .about-stats > div, .project-card, .skill-card, .timeline-item, .cert-card, .resume-card, #contact > p, #contact > a, .contact-links'
-  );
+  let lastToggle = 0;
+  function toggleMenuSafe() {
+    const now = Date.now();
+    if (now - lastToggle < 400) return;
+    lastToggle = now;
+    if (navMenu.classList.contains('menu-open')) closeMenu();
+    else openMenu();
+  }
 
-  revealItems.forEach(function(el, index) {
-    const fromLeft = index % 2 === 0; // Ek Left, ek Right
-    el.classList.add(fromLeft ? 'animate-left' : 'animate-right');
+  function centrePills() {
+    const first = navMenu.querySelector('a');
+    if (!first) return;
+    const h = window.innerHeight;
+    const pillH = first.offsetHeight || 50;
+    const pad = Math.max(0, (h / 2) - (pillH / 2));
+    navMenu.style.setProperty('padding-top', pad + 'px', 'important');
+    navMenu.style.setProperty('padding-bottom', pad + 'px', 'important');
+    navMenu.scrollTop = 0;
+    updateCenterPop();
+  }
 
-    if (el.classList.contains('project-card') || el.classList.contains('skill-card') || el.classList.contains('timeline-item') || el.classList.contains('cert-card') || el.classList.contains('resume-card') || el.parentElement.classList.contains('about-stats')) {
-      el.classList.add('animate-card');
+  function openMenu() {
+    navMenu.classList.add('menu-open');
+    navMenu.style.setProperty('display', 'flex', 'important');
+    document.body.classList.add('menu-open-body');
+    menuBtn.textContent = '✕';
+    centrePills();
+    setTimeout(centrePills, 100);
+    setTimeout(centrePills, 300);
+  }
+  function closeMenu() {
+    navMenu.classList.remove('menu-open');
+    navMenu.style.setProperty('display', 'none', 'important');
+    document.body.classList.remove('menu-open-body');
+    menuBtn.textContent = '☰';
+  }
+
+  menuBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    toggleMenuSafe();
+  });
+
+  navMenu.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      closeMenu();
+    });
+  });
+
+  document.addEventListener('click', function(e) {
+    if (navMenu.classList.contains('menu-open') && !navMenu.contains(e.target) && e.target !== menuBtn && !menuBtn.contains(e.target)) {
+      closeMenu();
     }
-
-    const startX = fromLeft ? -60 : 60;
-
-    // SCRUB = Scroll se linked
-    gsap.fromTo(el,
-      { x: startX, y: 10, opacity: 0 },
-      {
-        x: 0, y: 0, opacity: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 92%',
-          end: 'top 55%',
-          scrub: 1
-        }
-      }
-    );
-
-    // ---------- 3. TEXT - Word by Word, SCROLL SPEED SE ----------
-    const textsInside = el.querySelectorAll('[data-animate-done]');
-    const texts = [];
-    if (el.dataset.animateDone) texts.push(el);
-    textsInside.forEach(function(t) { texts.push(t); });
-
-    texts.forEach(function(t) {
-      if (!t._words || !t._words.length) return;
-      gsap.set(t._words, { opacity: 0, y: 10 });
-      gsap.to(t._words, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 92%',
-          end: 'top 55%',
-          scrub: 1
-        }
-      });
-    });
   });
 
-  // ---------- 4. Skill Bar - Scroll speed se fill hoga ----------
-  gsap.utils.toArray('.skill-bar span').forEach(function(bar) {
-    const w = bar.style.width;
-    gsap.fromTo(bar, { width: '0%' }, {
-      width: w,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: bar,
-        start: 'top 95%',
-        end: 'top 70%',
-        scrub: 1
+  function updateCenterPop() {
+    const links = navMenu.querySelectorAll('a');
+    if (!links.length) return;
+    const centerY = window.innerHeight / 2;
+    let closest = null;
+    let closestDist = 10000;
+    links.forEach(function(a) {
+      const r = a.getBoundingClientRect();
+      const pillCenter = r.top + r.height / 2;
+      const dist = Math.abs(pillCenter - centerY);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = a;
       }
     });
+    links.forEach(a => a.classList.remove('pop'));
+    if (closest) closest.classList.add('pop');
+  }
+
+  let startY = 0, startScroll = 0, isDragging = false;
+  navMenu.addEventListener('touchstart', function(e) {
+    isDragging = true;
+    startY = e.touches[0].clientY;
+    startScroll = navMenu.scrollTop;
+  }, { passive: true });
+
+  navMenu.addEventListener('touchmove', function(e) {
+    if (!isDragging) return;
+    const y = e.touches[0].clientY;
+    navMenu.scrollTop = startScroll + (startY - y);
+    updateCenterPop();
+  }, { passive: true });
+
+  navMenu.addEventListener('touchend', function() {
+    isDragging = false;
+    setTimeout(updateCenterPop, 100);
   });
 
-  // ---------- 5. Card Hover - Halka 3D ----------
-  document.querySelectorAll('.animate-card').forEach(function(card) {
-    card.addEventListener('mousemove', function(e) {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = 'perspective(900px) rotateY(' + (x * 5) + 'deg) rotateX(' + (-y * 5) + 'deg) translateY(-2px)';
+  navMenu.addEventListener('scroll', updateCenterPop, { passive: true });
+  navMenu.addEventListener('wheel', function() {
+    setTimeout(updateCenterPop, 50);
+  }, { passive: true });
+
+  window.addEventListener('resize', function() {
+    if (navMenu.classList.contains('menu-open')) centrePills();
+  });
+
+  const certModal = document.getElementById('certModal');
+  const certImage = document.getElementById('certImage');
+  window.openCertView = function() {
+    if (!certModal || !certImage) return;
+    document.getElementById('certModalImg').src = certImage.src;
+    document.getElementById('certModalDownload').href = certImage.src;
+    certModal.style.display = 'flex';
+  };
+  window.closeCertView = function() {
+    if (certModal) certModal.style.display = 'none';
+  };
+
+  const viewBtn = document.getElementById('viewResumeBtn');
+  if (viewBtn) {
+    viewBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const absoluteUrl = new URL('public/resume.pdf', window.location.href).href;
+      const viewerUrl = 'https://docs.google.com/viewer?url=' + encodeURIComponent(absoluteUrl) + '&embedded=true';
+      window.open(viewerUrl, '_blank');
     });
-    card.addEventListener('mouseleave', function() {
-      card.style.transform = '';
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      const id = a.getAttribute('href');
+      if (id && id.length > 1) {
+        const t = document.querySelector(id);
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+      }
     });
   });
 });
