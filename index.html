@@ -25,19 +25,23 @@
     display: flex !important;
     flex-direction: column !important;
     gap: 10px !important;
-    background: rgba(0, 0, 0, 0.55) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: rgba(10, 10, 15, 0.88) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
     border-radius: 0 0 20px 20px !important;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
     position: fixed !important;
     top: 70px !important;
     left: 0 !important;
     width: 100% !important;
     height: calc(100vh - 70px) !important;
     max-height: none !important;
-    padding: 16px 20px 30px 20px !important;
+    /* SAHI FIX - Ab HOME bhi bich me, LET'S TALK bhi bich me */
+    padding-top: calc(50vh - 60px) !important;
+    padding-bottom: calc(50vh - 60px) !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
     overflow-y: auto !important;
     overscroll-behavior: contain !important;
     z-index: 99999 !important;
@@ -57,7 +61,6 @@
     transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease !important;
     will-change: transform !important;
   }
-  /* CENTRE wala pill - bada pop */
   #navLinks a.pop {
     transform: scale(1.15) !important;
     background: rgba(255, 255, 255, 0.95) !important;

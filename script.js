@@ -1,4 +1,4 @@
-// FULL JS - Full Scroll + ONLY Centre Pop
+// FULL JS - Har pill bich me aayega + ONLY Centre Pop
 document.addEventListener('DOMContentLoaded', function() {
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navLinks');
@@ -7,7 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
   function openMenu() {
     navMenu.classList.add('menu-open');
     navMenu.style.setProperty('display', 'flex', 'important');
-    setTimeout(updateCenterPop, 80);
+    setTimeout(function() {
+      navMenu.scrollTop = 0;
+      updateCenterPop();
+    }, 80);
   }
   function closeMenu() {
     navMenu.classList.remove('menu-open');
@@ -41,16 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // ===== SIRF CENTRE POP - Jo pill menu ke bich me aayega wahi bada hoga =====
   function updateCenterPop() {
     const links = navMenu.querySelectorAll('a');
     if (!links.length) return;
     const menuRect = navMenu.getBoundingClientRect();
     const centerY = menuRect.top + menuRect.height / 2;
-
     let closest = null;
     let closestDist = 10000;
-
     links.forEach(function(a) {
       const r = a.getBoundingClientRect();
       const pillCenter = r.top + r.height / 2;
@@ -60,19 +60,16 @@ document.addEventListener('DOMContentLoaded', function() {
         closest = a;
       }
     });
-
     links.forEach(a => a.classList.remove('pop'));
     if (closest) closest.classList.add('pop');
   }
 
-  // Scroll karte time centre wala badalta rahega
   navMenu.addEventListener('scroll', updateCenterPop, { passive: true });
   navMenu.addEventListener('touchmove', updateCenterPop, { passive: true });
   navMenu.addEventListener('touchend', function() {
     setTimeout(updateCenterPop, 100);
   });
 
-  // CERTIFICATE
   const certModal = document.getElementById('certModal');
   const certImage = document.getElementById('certImage');
   window.openCertView = function() {
@@ -85,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (certModal) certModal.style.display = 'none';
   };
 
-  // SMOOTH SCROLL
   document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     a.addEventListener('click', function(e) {
       const id = a.getAttribute('href');
