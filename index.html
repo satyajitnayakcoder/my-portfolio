@@ -9,6 +9,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./style.css" />
  <style>
+#menuCheck {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 1px !important;
+  height: 1px !important;
+}
+.menu-toggle {
+  display: block !important;
+  font-size: 28px !important;
+  cursor: pointer !important;
+  z-index: 100000 !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
 @media (max-width: 900px) {
   #navLinks { display: none !important; }
 
@@ -59,11 +74,6 @@
   }
 
   #navSlider { display: none !important; }
-  .menu-toggle {
-    display: block !important;
-    z-index: 100000 !important;
-    cursor: pointer !important;
-  }
 }
 </style>
 </head>
@@ -71,7 +81,7 @@
 
   <header class="navbar">
     <a href="#home" class="logo">SATYAJIT<span>.</span></a>
-    <input type="checkbox" id="menuCheck" style="display:none;">
+    <input type="checkbox" id="menuCheck">
     <label for="menuCheck" class="menu-toggle" id="menuBtn">☰</label>
     <nav class="nav-links" id="navLinks">
       <a href="#home" class="active">HOME</a>

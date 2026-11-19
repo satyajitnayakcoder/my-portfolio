@@ -1,4 +1,4 @@
-// ===== SATYAJIT PORTFOLIO - FULL JS - CENTER POP + TRANSPARENT MENU =====
+// ===== SATYAJIT PORTFOLIO - FULL JS - FIXED MENU + CENTER POP =====
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -6,23 +6,38 @@ document.addEventListener('DOMContentLoaded', function() {
   const navMenu = document.getElementById('navLinks');
   const menuCheck = document.getElementById('menuCheck');
 
-  // 1. MENU - 3 LINE BUTTON
-  if (menuBtn && navMenu) {
-    menuBtn.addEventListener('click', function() {
+  // 1. MENU - 3 LINE BUTTON - JS se bhi khulega, CSS se bhi
+  if (menuBtn && navMenu && menuCheck) {
+
+    // Label pe click hoga toh checkbox khud toggle hoga,
+    // hum sirf class sync karenge
+    menuBtn.addEventListener('click', function(e) {
+      // Label ka default kaam hone do, phir class lagao
       setTimeout(function() {
-        if (menuCheck && menuCheck.checked) {
+        if (menuCheck.checked) {
           navMenu.classList.add('active');
+          setTimeout(updateCenterPop, 60);
         } else {
           navMenu.classList.remove('active');
         }
-      }, 10);
+      }, 20);
     });
 
-    // Pill pe click -> menu band
+    // Checkbox change hoga toh class bhi change
+    menuCheck.addEventListener('change', function() {
+      if (menuCheck.checked) {
+        navMenu.classList.add('active');
+        setTimeout(updateCenterPop, 60);
+      } else {
+        navMenu.classList.remove('active');
+      }
+    });
+
+    // Kisi pill pe click -> menu band
     navMenu.querySelectorAll('a').forEach(function(link) {
       link.addEventListener('click', function() {
         navMenu.classList.remove('active');
-        if (menuCheck) menuCheck.checked = false;
+        menuCheck.checked = false;
       });
     });
 
@@ -35,57 +50,38 @@ document.addEventListener('DOMContentLoaded', function() {
         !menuBtn.contains(e.target)
       ) {
         navMenu.classList.remove('active');
-        if (menuCheck) menuCheck.checked = false;
+        menuCheck.checked = false;
       }
     });
-
-    if (menuCheck) {
-      menuCheck.addEventListener('change', function() {
-        if (menuCheck.checked) navMenu.classList.add('active');
-        else navMenu.classList.remove('active');
-      });
-    }
   }
 
   // 2. AUTO CENTER POP - Jo pill bich me aayega, wohi bada hoga
+  function updateCenterPop() {
+    if (!navMenu) return;
+    const links = navMenu.querySelectorAll('a');
+    if (!links.length) return;
+
+    const menuRect = navMenu.getBoundingClientRect();
+    const centerY = menuRect.top + menuRect.height / 2;
+
+    let closest = null;
+    let closestDist = 10000;
+
+    links.forEach(function(a) {
+      const r = a.getBoundingClientRect();
+      const pillCenter = r.top + r.height / 2;
+      const dist = Math.abs(pillCenter - centerY);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = a;
+      }
+    });
+
+    links.forEach(a => a.classList.remove('pop'));
+    if (closest) closest.classList.add('pop');
+  }
+
   if (navMenu) {
-    function updateCenterPop() {
-      const links = navMenu.querySelectorAll('a');
-      if (!links.length) return;
-
-      const menuRect = navMenu.getBoundingClientRect();
-      const centerY = menuRect.top + menuRect.height / 2;
-
-      let closest = null;
-      let closestDist = 10000;
-
-      links.forEach(function(a) {
-        const r = a.getBoundingClientRect();
-        const pillCenter = r.top + r.height / 2;
-        const dist = Math.abs(pillCenter - centerY);
-        if (dist < closestDist) {
-          closestDist = dist;
-          closest = a;
-        }
-      });
-
-      links.forEach(a => a.classList.remove('pop'));
-      if (closest) closest.classList.add('pop');
-    }
-
-    // Menu khulte hi bich wala pop hoga
-    if (menuCheck) {
-      menuCheck.addEventListener('change', function() {
-        if (menuCheck.checked) setTimeout(updateCenterPop, 50);
-      });
-    }
-    if (menuBtn) {
-      menuBtn.addEventListener('click', function() {
-        setTimeout(updateCenterPop, 50);
-      });
-    }
-
-    // Slide / Scroll karte time bich wala badalta rahega
     navMenu.addEventListener('scroll', updateCenterPop, { passive: true });
     navMenu.addEventListener('touchmove', updateCenterPop, { passive: true });
     navMenu.addEventListener('touchend', function() {
@@ -124,5 +120,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  console.log('JS Loaded - Center Pop Ready');
+  console.log('JS Loaded - Menu Fixed');
 });
