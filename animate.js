@@ -1,150 +1,128 @@
-// ===== SIRF ANIMATION - Purani script.js ko haath nahi lagaya =====
+// ===== NAYA - SCROLL-LINKED - Hero Fix ke saath =====
+// Typing nahi, Cursor nahi, Flip nahi
+// Tez scroll = Tez animation, Dheere scroll = Dheere, Ruk gaya = Ruk jayega, Up scroll = Ulta
 document.addEventListener('DOMContentLoaded', function() {
   if (typeof gsap === 'undefined') return;
   gsap.registerPlugin(ScrollTrigger);
 
-  // 1. Purane HTML ko bina edit kiye, JS se hi class lagao
-  // Section ke andar ke headings / paragraphs ko Word-by-Word ke liye pakdo
+  // ---------- 1. WORDS KO TAIYAR KARO - HERO KO CHHOD KE ----------
+  // Hero ke words ko hum hide hi nahi karenge, isliye wo kabhi gayab nahi honge
   const wordTargets = document.querySelectorAll(
-    '.hero h2, .hero-description, #about .section-heading h2, #about > p, #projects .section-heading h2, #skills .section-heading h2, #experience .section-heading h2, #certificates .section-heading h2, #resume .section-heading h2, #contact .section-heading h2, #contact > p'
+    '#about .section-heading h2, #about > p, #projects .section-heading h2, #skills .section-heading h2, #experience .section-heading h2, #certificates .section-heading h2, #resume .section-heading h2, #contact .section-heading h2, #contact > p'
   );
 
-  wordTargets.forEach(function(el) {
-    // Agar pehle se setup ho gaya toh dobara mat karo
+  function wrapWords(el) {
     if (el.dataset.animateDone) return;
     el.dataset.animateDone = '1';
-    // Original text save karo, screen pe khali karo, JS khud word-by-word bharega
-    el.dataset.fullText = el.textContent.trim();
-    el.textContent = '';
-    // Cursor add karo - purane HTML me nahi tha, JS se add ho raha hai
-    const cursor = document.createElement('span');
-    cursor.className = 'animate-cursor';
-    cursor.textContent = '|';
-    el.appendChild(cursor);
-    // Text ke liye alag span banao taaki cursor hamesha end me rahe
-    const textSpan = document.createElement('span');
-    el.insertBefore(textSpan, cursor);
-    el._textSpan = textSpan;
-  });
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    const textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(node) {
+      const text = node.textContent;
+      if (!text.trim()) return;
+      const frag = document.createDocumentFragment();
+      text.split(/(\s+)/).forEach(function(part) {
+        if (!part) return;
+        if (/^\s+$/.test(part)) {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const s = document.createElement('span');
+          s.className = 'animate-word';
+          s.textContent = part;
+          frag.appendChild(s);
+        }
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+    el._words = el.querySelectorAll('.animate-word');
+  }
+  wordTargets.forEach(wrapWords);
 
-  // 2. Word-by-Word - Typewriter nahi, pura word ek saath
-  function showWords(el, reverse) {
-    const span = el._textSpan;
-    if (!span) return;
-    const words = (el.dataset.fullText || '').split(' ');
-    if (el._typing) clearInterval(el._typing);
-
-    if (!reverse) {
-      let count = span.textContent.trim() ? span.textContent.trim().split(' ').length : 0;
-      if (count >= words.length) return;
-      el._typing = setInterval(function() {
-        count++;
-        span.textContent = words.slice(0, count).join(' ');
-        if (count >= words.length) clearInterval(el._typing);
-      }, 180); // Speed yahan se - 180 = normal, 300 = slow, 100 = fast
-    } else {
-      let count = span.textContent.trim() ? span.textContent.trim().split(' ').length : words.length;
-      el._typing = setInterval(function() {
-        count--;
-        span.textContent = words.slice(0, Math.max(0, count)).join(' ');
-        if (count <= 0) clearInterval(el._typing);
-      }, 60);
-    }
+  // ---------- 2. HERO - Turant dikhao, scroll ka wait mat karo ----------
+  // Hero pehle se screen pe hai, isliye isko hide karna hi galti thi
+  const heroEl = document.querySelector('.hero-content');
+  if (heroEl) {
+    gsap.fromTo(heroEl,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+    );
+  }
+  const heroImg = document.querySelector('.hero-image-wrapper');
+  if (heroImg) {
+    gsap.fromTo(heroImg,
+      { opacity: 0, x: 60 },
+      { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out', delay: 0.1 }
+    );
   }
 
-  // 3. Left / Right 3D Reveal - Flip nahi
-  // Purane cards / sections ko JS se hi Left / Right de do - HTML edit nahi
+  // ---------- 3. BAAKI SAB - Left / Right, SCROLL SPEED SE ----------
   const revealItems = document.querySelectorAll(
-    '.hero-image-wrapper, .section-label, .section-heading, #about > p, .about-stats > div, .project-card, .skill-card, .timeline-item, .cert-card, .resume-card, #contact > p, #contact > a, .contact-links'
+    '.section-label, .section-heading, #about > p, .about-stats > div, .project-card, .skill-card, .timeline-item, .cert-card, .resume-card, #contact > p, #contact > a, .contact-links'
   );
 
   revealItems.forEach(function(el, index) {
-    const fromLeft = index % 2 === 0; // Ek Left, ek Right, ek Left, ek Right...
+    const fromLeft = index % 2 === 0; // Ek Left, ek Right
     el.classList.add(fromLeft ? 'animate-left' : 'animate-right');
 
-    // Agar ye card hai toh 3D card class bhi laga do
-    if (el.classList.contains('project-card') || el.classList.contains('skill-card') || el.classList.contains('timeline-item') || el.classList.contains('cert-card') || el.classList.contains('resume-card') || el.parentElement.classList.contains('about-stats')) {
+    if (el.classList.contains('project-card') || el.classList.contains('skill-card') || el.classList.contains('timeline-item') || el.classList.contains('cert-card') || el.classList.contains('resume-card') || (el.parentElement && el.parentElement.classList.contains('about-stats'))) {
       el.classList.add('animate-card');
     }
 
-    const startX = fromLeft ? -110 : 110;
-    gsap.set(el, { x: startX, y: 30, z: 40, scale: 0.92, opacity: 0 });
+    const startX = fromLeft ? -60 : 60;
 
-    ScrollTrigger.create({
-      trigger: el,
-      start: 'top 88%',
-      end: 'bottom 5%',
-      onEnter: function() {
-        el.classList.remove('dissolving');
-        gsap.to(el, { x: 0, y: 0, z: 0, scale: 1, opacity: 1, duration: 0.9, ease: 'power3.out', overwrite: true });
-        // Iske andar jo word-target hai usko word-by-word dikhao
-        el.querySelectorAll('[data-full-text]').forEach(function(t) { showWords(t, false); });
-        if (el.dataset.fullText) showWords(el, false);
-      },
-      onLeave: function() {
-        el.classList.add('dissolving');
-        gsap.to(el, { x: fromLeft ? -80 : 80, y: 20, z: 20, scale: 0.92, opacity: 0, duration: 0.5, ease: 'power2.in' });
-        el.querySelectorAll('[data-full-text]').forEach(function(t) { showWords(t, true); });
-        if (el.dataset.fullText) showWords(el, true);
-      },
-      onEnterBack: function() {
-        el.classList.remove('dissolving');
-        gsap.to(el, { x: 0, y: 0, z: 0, scale: 1, opacity: 1, duration: 0.9, ease: 'power3.out', overwrite: true });
-        el.querySelectorAll('[data-full-text]').forEach(function(t) { showWords(t, false); });
-        if (el.dataset.fullText) showWords(el, false);
-      },
-      onLeaveBack: function() {
-        el.classList.add('dissolving');
-        gsap.to(el, { x: startX, y: 30, z: 40, scale: 0.92, opacity: 0, duration: 0.5, ease: 'power2.in' });
-        el.querySelectorAll('[data-full-text]').forEach(function(t) { showWords(t, true); });
-        if (el.dataset.fullText) showWords(el, true);
+    // SCRUB = Scroll se linked
+    gsap.fromTo(el,
+      { x: startX, y: 10, opacity: 0 },
+      {
+        x: 0, y: 0, opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 92%',
+          end: 'top 55%',
+          scrub: 1
+        }
       }
+    );
+
+    // Text - Word by Word, SCROLL SPEED SE
+    const textsInside = el.querySelectorAll('[data-animate-done]');
+    const texts = [];
+    if (el.dataset.animateDone) texts.push(el);
+    textsInside.forEach(function(t) { texts.push(t); });
+
+    texts.forEach(function(t) {
+      if (!t._words || !t._words.length) return;
+      gsap.set(t._words, { opacity: 0, y: 10 });
+      gsap.to(t._words, {
+        opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'none',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 92%',
+          end: 'top 55%',
+          scrub: 1
+        }
+      });
     });
   });
 
-  // Hero ka text page load pe hi word-by-word
-  document.querySelectorAll('.hero h2, .hero-description').forEach(function(t) {
-    setTimeout(function() { showWords(t, false); }, 600);
+  // ---------- 4. Skill Bar - Scroll speed se fill hoga ----------
+  gsap.utils.toArray('.skill-bar span').forEach(function(bar) {
+    const w = bar.style.width;
+    gsap.fromTo(bar, { width: '0%' }, {
+      width: w, ease: 'none',
+      scrollTrigger: { trigger: bar, start: 'top 95%', end: 'top 70%', scrub: 1 }
+    });
   });
 
-  // 4. 3D Tilt - Halka jhukega, paltega nahi
+  // ---------- 5. Card Hover - Halka 3D ----------
   document.querySelectorAll('.animate-card').forEach(function(card) {
     card.addEventListener('mousemove', function(e) {
       const r = card.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
       const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = 'perspective(900px) rotateY(' + (x * 8) + 'deg) rotateX(' + (-y * 8) + 'deg) translateZ(20px) scale(1.02)';
+      card.style.transform = 'perspective(900px) rotateY(' + (x * 5) + 'deg) rotateX(' + (-y * 5) + 'deg) translateY(-2px)';
     });
-    card.addEventListener('mouseleave', function() {
-      card.style.transform = '';
-    });
+    card.addEventListener('mouseleave', function() { card.style.transform = ''; });
   });
-
-  // 5. Skill Bar - Scroll pe fill
-  gsap.utils.toArray('.skill-bar span').forEach(function(bar) {
-    const w = bar.style.width;
-    gsap.fromTo(bar, { width: '0%' }, { width: w, duration: 1.2, ease: 'power2.out', scrollTrigger: { trigger: bar, start: 'top 92%' } });
-  });
-
-  // 6. Smooth Scroll - Sirf Desktop pe
-  let targetY = window.scrollY, currentY = window.scrollY, isScrolling = false;
-  function smoothLoop() {
-    currentY += (targetY - currentY) * 0.12;
-    if (Math.abs(targetY - currentY) > 0.5) {
-      window.scrollTo(0, currentY);
-      requestAnimationFrame(smoothLoop);
-    } else {
-      isScrolling = false;
-      window.scrollTo(0, targetY);
-    }
-    ScrollTrigger.refresh();
-  }
-  if (window.innerWidth > 900) {
-    window.addEventListener('wheel', function(e) {
-      if (document.body.classList.contains('menu-open-body')) return;
-      e.preventDefault();
-      targetY = Math.max(0, Math.min(document.body.scrollHeight - window.innerHeight, targetY + e.deltaY));
-      if (!isScrolling) { isScrolling = true; requestAnimationFrame(smoothLoop); }
-    }, { passive: false });
-  }
 });

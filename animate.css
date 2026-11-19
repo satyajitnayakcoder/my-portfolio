@@ -1,29 +1,26 @@
-/* ===== APPEAR ONLY - No Typing, No Cursor, No Lag ===== */
+/* ===== APPEAR ONLY - No Typing, No Cursor, No Flip, No Lag ===== */
 
 /* Boxes / Images - Left / Right se smooth */
 .animate-left, .animate-right {
-  opacity: 0;
   will-change: transform, opacity;
   transform: translateZ(0);
   backface-visibility: hidden;
 }
-.animate-left {
-  transform: translateX(-60px) translateY(10px);
-}
-.animate-right {
-  transform: translateX(60px) translateY(10px);
-}
+.animate-left { transform: translateX(-60px) translateY(10px); }
+.animate-right { transform: translateX(60px) translateY(10px); }
 
 /* Text - Word by Word APPEAR, fade + halka up */
 .animate-word {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(10px);
   will-change: opacity, transform;
 }
-.animate-word.visible {
-  opacity: 1;
-  transform: translateY(0);
+
+/* HERO ko kabhi hide mat karo - Ye pehle se screen pe hai */
+.hero .animate-word,
+.hero .animate-left,
+.hero .animate-right,
+.hero-content {
+  opacity: 1 !important;
 }
 
 /* 3D Card - Sirf halka depth */
