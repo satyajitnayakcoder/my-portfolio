@@ -1,3 +1,6 @@
+Le bhai — *full code, sab laga ke.* Red box hata diya, navbar screen ke hisab se kar diya, animation bhi hai.
+
+Bas pura copy karke `index.html` me paste kar de.
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,7 +95,8 @@ body.menu-open-body .logo {
   width: 64px !important;
   height: 64px !important;
   border-radius: 12px !important;
-  background: #e74c3c !important;
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,0.25) !important;
   color: #fff !important;
   font-weight: 900 !important;
   font-size: 18px !important;
@@ -100,6 +104,7 @@ body.menu-open-body .logo {
   align-items: center !important;
   justify-content: center !important;
   letter-spacing: 1px !important;
+  box-shadow: none !important;
 }
 .resume-card h3 { margin: 0 !important; font-size: 18px !important; color: #fff !important; }
 .resume-card p { margin: 0 !important; font-size: 14px !important; color: #aaa !important; }
@@ -177,6 +182,27 @@ body.menu-open-body .logo {
     z-index: 2 !important;
   }
   #navSlider { display: none !important; }
+}
+/* NAVBAR - SCREEN KE HISAB SE, JYADA CHODA NAHI */
+.navbar {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  overflow: hidden !important;
+}
+.navbar .logo {
+  max-width: calc(100vw - 70px) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+@media (max-width: 900px) {
+  .navbar {
+    padding-left: 14px !important;
+    padding-right: 60px !important;
+  }
 }
 </style>
 
