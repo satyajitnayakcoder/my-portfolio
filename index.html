@@ -20,7 +20,6 @@
   color: #fff !important;
   touch-action: manipulation !important;
 }
-/* CROSS BUTTON - Body me, menu se bhi upar */
 body > .menu-toggle {
   position: fixed !important;
   top: 14px !important;
@@ -39,7 +38,6 @@ body.menu-open-body > .menu-toggle {
   justify-content: center !important;
   font-size: 22px !important;
 }
-/* MENU KHULTE HI - Navbar / Menu Bar Gayab */
 body.menu-open-body .navbar {
   background: transparent !important;
   backdrop-filter: none !important;
@@ -51,6 +49,54 @@ body.menu-open-body .logo {
   opacity: 0 !important;
   pointer-events: none !important;
 }
+/* RESUME - Ab iframe nahi, Certificate jaisa chhota Card */
+#resume .resume-preview,
+.resume-card {
+  width: 360px !important;
+  max-width: 88vw !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 auto !important;
+  padding: 28px 20px !important;
+  overflow: hidden !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  background: #111 !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+.resume-card .pdf-icon {
+  width: 64px !important;
+  height: 64px !important;
+  border-radius: 12px !important;
+  background: #e74c3c !important;
+  color: #fff !important;
+  font-weight: 900 !important;
+  font-size: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  letter-spacing: 1px !important;
+}
+.resume-card h3 { margin: 0 !important; font-size: 18px !important; color: #fff !important; }
+.resume-card p { margin: 0 !important; font-size: 14px !important; color: #aaa !important; }
+.resume-card .resume-btns { display: flex !important; gap: 10px !important; margin-top: 8px !important; flex-wrap: wrap !important; justify-content: center !important; }
+.resume-card .resume-btns a {
+  padding: 10px 18px !important;
+  border-radius: 50px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+}
+.resume-card .view-btn { background: #fff !important; color: #000 !important; }
+.resume-card .dl-btn { background: transparent !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.4) !important; }
+#resume .resume-preview iframe { display: none !important; }
+#resume .resume-note { text-align: center !important; margin-top: 14px !important; }
 @media (max-width: 900px) {
   #navLinks { display: none !important; }
   #navLinks.menu-open {
@@ -236,10 +282,15 @@ Based in Jajpur, Odisha, India.</p>
   <section class="section" id="resume">
     <p class="section-label">06 — RESUME</p>
     <div class="section-heading"><h2>My <span>Resume.</span></h2></div>
-    <div class="resume-preview">
-      <iframe src="public/resume.pdf" title="Satyajit Nayak Resume"></iframe>
+    <div class="resume-preview resume-card">
+      <div class="pdf-icon">PDF</div>
+      <h3>Satyajit Nayak — Resume</h3>
+      <p>Click View to open, or Download to save.</p>
+      <div class="resume-btns">
+        <a href="public/resume.pdf" target="_blank" class="view-btn">VIEW RESUME ↗</a>
+        <a href="public/resume.pdf" download class="dl-btn">DOWNLOAD ↓</a>
+      </div>
     </div>
-    <p class="resume-note">Is the resume not opening? <a href="/resume.pdf" download>Download it from here.</a></p>
   </section>
 
   <section class="section contact-section" id="contact">
