@@ -339,3 +339,13 @@ document.addEventListener("DOMContentLoaded", function () {
   padding: 0 !important;
   white-space: nowrap !important;
 }
+/* MOBILE ME 07 BILKUL 06 KE BARABAR */
+@media (max-width: 650px) {
+  .contact-section {
+    padding: 40px 7% 60px 7% !important;
+  }
+  .contact-section .section-label {
+    left: 7% !important;
+    top: 15px !important;
+  }
+}
