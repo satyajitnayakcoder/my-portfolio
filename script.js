@@ -188,3 +188,18 @@ function closeCertView() {
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") closeCertView();
 });
+// Menu Toggle Fix
+document.addEventListener("DOMContentLoaded", function () {
+  const btn = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".nav-links");
+  if (btn && nav) {
+    btn.addEventListener("click", function () {
+      nav.classList.toggle("active");
+    });
+    nav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        nav.classList.remove("active");
+      });
+    });
+  }
+});
