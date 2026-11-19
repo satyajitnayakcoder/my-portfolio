@@ -1,4 +1,4 @@
-// FULL JS - Cross fix: Sirf CLICK, touchend hataya, double-toggle lock lagaya
+// FULL JS - Menu Cross fix + Resume Google Viewer
 document.addEventListener('DOMContentLoaded', function() {
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navLinks');
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let lastToggle = 0;
   function toggleMenuSafe() {
     const now = Date.now();
-    if (now - lastToggle < 400) return; // 400ms ke andar dobara toggle nahi hoga
+    if (now - lastToggle < 400) return;
     lastToggle = now;
     if (navMenu.classList.contains('menu-open')) closeMenu();
     else openMenu();
@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
     menuBtn.textContent = '☰';
   }
 
-  // SIRF CLICK - touchend mat lagana, wahi double-toggle kar raha tha
   menuBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     e.preventDefault();
@@ -125,6 +124,17 @@ document.addEventListener('DOMContentLoaded', function() {
   window.closeCertView = function() {
     if (certModal) certModal.style.display = 'none';
   };
+
+  // VIEW RESUME - Google Docs Viewer se ONLINE kholega, download nahi bolega
+  const viewBtn = document.getElementById('viewResumeBtn');
+  if (viewBtn) {
+    viewBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const absoluteUrl = new URL('public/resume.pdf', window.location.href).href;
+      const viewerUrl = 'https://docs.google.com/viewer?url=' + encodeURIComponent(absoluteUrl) + '&embedded=true';
+      window.open(viewerUrl, '_blank');
+    });
+  }
 
   document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     a.addEventListener('click', function(e) {
