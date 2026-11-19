@@ -318,47 +318,22 @@ document.addEventListener("DOMContentLoaded", function () {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.5) !important;
   z-index: 20 !important;
 }
-/* 07 TOP-LEFT JAISE DUSRE SECTION */
+
+/* 07 FIX - FINAL - SIRF YE ADD KIYA HAI, BAKI SAB SAME HAI */
 .contact-section {
   padding: 50px 9% !important;
   text-align: center !important;
 }
-/* 07 BILKUL TOP-LEFT - ARROW WALI JAGAH */
-.contact-section {
-  position: relative !important;
-  padding: 30px 9% 60px 9% !important;
-  text-align: center !important;
-}
 .contact-section .section-label {
-  position: absolute !important;
-  top: 28px !important;
-  left: 9% !important;
   text-align: left !important;
   display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  white-space: nowrap !important;
-}
-/* MOBILE ME 07 BILKUL 06 KE BARABAR */
-@media (max-width: 650px) {
-  .contact-section {
-    padding: 40px 7% 60px 7% !important;
-  }
-  .contact-section .section-label {
-    left: 7% !important;
-    top: 15px !important;
-  }
-}
-/* 07 OVERLAP FIX - ABSOLUTE HATAO */
-.contact-section .section-label {
-  position: static !important;
-  left: auto !important;
-  top: auto !important;
-  display: block !important;
-  text-align: left !important;
+  width: 100% !important;
   margin: 0 0 10px 0 !important;
   padding: 0 !important;
+  position: static !important;
 }
-.contact-section {
-  padding: 40px 7% 60px 7% !important;
+@media (max-width: 650px) {
+  .contact-section {
+    padding: 10px 7% 60px 7% !important;
+  }
 }
