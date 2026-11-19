@@ -128,16 +128,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentYear = new Date().getFullYear();
     footerText.textContent = "© " + currentYear + " SATYAJIT NAYAK. ALL RIGHTS RESERVED.";
   }
-    // Mobile glassy slide - INSIDE DOMContentLoaded
-  const glassSections = document.querySelectorAll(".section");
-  const glassObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("visible");
     });
   }, { threshold: 0.05 });
-
-  glassSections.forEach(s => glassObserver.observe(s));
-  document.querySelector("#home")?.classList.add("visible");
 });
 
 function openCertView() {

@@ -170,20 +170,6 @@ footer p, footer > a:last-child { font-size: 10px; letter-spacing: 1px; color: #
     box-shadow: 0 8px 30px rgba(0,0,0,0.20) !important;
   }
 
-  .section {
-    opacity: 0;
-    transform: translateY(30px) scale(0.97);
-    filter: blur(10px);
-    transition: all 0.7s ease-out;
-    will-change: transform, opacity, filter;
-  }
-
-  .section.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-
   /* Resume / Cards pe bhi glass */
   .project-card, .cert-card, .glass-card {
     background: rgba(255,255,255,0.12) !important;
@@ -219,4 +205,11 @@ footer p, footer > a:last-child { font-size: 10px; letter-spacing: 1px; color: #
   backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
   border: 1px solid rgba(255,255,255,0.3) !important;
+}
+/* FIX - Sab section hamesha dikhne chahiye */
+.section {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  visibility: visible !important;
 }
