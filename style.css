@@ -318,11 +318,15 @@ document.addEventListener("DOMContentLoaded", function () {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.5) !important;
   z-index: 20 !important;
 }
-/* SIRF 07 LABEL LEFT */
+/* 07 TOP-LEFT JAISE DUSRE SECTION */
+.contact-section {
+  padding: 50px 9% !important;
+  text-align: center !important;
+}
 .contact-section .section-label {
   text-align: left !important;
   display: block !important;
   width: 100% !important;
-  margin-left: 0 !important;
-  margin-right: auto !important;
+  margin: 0 0 10px 0 !important;
+  padding: 0 !important;
 }
