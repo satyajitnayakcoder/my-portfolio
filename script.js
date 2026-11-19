@@ -1,17 +1,23 @@
-// FULL JS - Cross button fix, Nav + Button dono body me, Pills bich me
+// FULL JS - Cross fix: Sirf CLICK, touchend hataya, double-toggle lock lagaya
 document.addEventListener('DOMContentLoaded', function() {
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navLinks');
   if (!menuBtn || !navMenu) return;
 
-  // FIX 1: Nav ko header se nikal ke body me
   if (navMenu.parentElement !== document.body) {
     document.body.appendChild(navMenu);
   }
-  // FIX 2: Cross button ko bhi header se nikal ke body me
-  // Nahi toh menu uske upar aa jata hai aur dabta nahi
   if (menuBtn.parentElement !== document.body) {
     document.body.appendChild(menuBtn);
+  }
+
+  let lastToggle = 0;
+  function toggleMenuSafe() {
+    const now = Date.now();
+    if (now - lastToggle < 400) return; // 400ms ke andar dobara toggle nahi hoga
+    lastToggle = now;
+    if (navMenu.classList.contains('menu-open')) closeMenu();
+    else openMenu();
   }
 
   function centrePills() {
@@ -41,23 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.classList.remove('menu-open-body');
     menuBtn.textContent = '☰';
   }
-  function toggleMenu() {
-    if (navMenu.classList.contains('menu-open')) closeMenu();
-    else openMenu();
-  }
 
-  // Cross / 3-dot - dono kaam karega
+  // SIRF CLICK - touchend mat lagana, wahi double-toggle kar raha tha
   menuBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     e.preventDefault();
-    toggleMenu();
+    toggleMenuSafe();
   });
-  // Mobile ke liye touch bhi
-  menuBtn.addEventListener('touchend', function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    toggleMenu();
-  }, { passive: false });
 
   navMenu.querySelectorAll('a').forEach(function(link) {
     link.addEventListener('click', function() {
@@ -65,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Bahar kahin bhi dabao toh band
   document.addEventListener('click', function(e) {
     if (navMenu.classList.contains('menu-open') && !navMenu.contains(e.target) && e.target !== menuBtn && !menuBtn.contains(e.target)) {
       closeMenu();
