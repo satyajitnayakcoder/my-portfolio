@@ -1,24 +1,24 @@
-// ===== FULL JS - MENU + SLIDE POP + CERT MODAL =====
+// ===== SATYAJIT PORTFOLIO - FULL JS - CENTER POP + TRANSPARENT MENU =====
 
 document.addEventListener('DOMContentLoaded', function() {
 
-  // 1. MENU BUTTON - 3 LINE
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navLinks');
   const menuCheck = document.getElementById('menuCheck');
 
+  // 1. MENU - 3 LINE BUTTON
   if (menuBtn && navMenu) {
-    menuBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      // Agar CSS wala checkbox hai toh usko bhi toggle karo
-      if (menuCheck) {
-        // Checkbox wala system hai toh JS toggle mat karo, checkbox khud karega
-        return;
-      }
-      navMenu.classList.toggle('active');
+    menuBtn.addEventListener('click', function() {
+      setTimeout(function() {
+        if (menuCheck && menuCheck.checked) {
+          navMenu.classList.add('active');
+        } else {
+          navMenu.classList.remove('active');
+        }
+      }, 10);
     });
 
-    // Kisi pill pe click karega toh menu band
+    // Pill pe click -> menu band
     navMenu.querySelectorAll('a').forEach(function(link) {
       link.addEventListener('click', function() {
         navMenu.classList.remove('active');
@@ -26,54 +26,78 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    // Bahar click karega toh band
+    // Bahar click -> band
     document.addEventListener('click', function(e) {
-      if (!navMenu.contains(e.target) && e.target !== menuBtn && !menuBtn.contains(e.target)) {
+      if (
+        navMenu.classList.contains('active') &&
+        !navMenu.contains(e.target) &&
+        e.target !== menuBtn &&
+        !menuBtn.contains(e.target)
+      ) {
         navMenu.classList.remove('active');
         if (menuCheck) menuCheck.checked = false;
       }
     });
+
+    if (menuCheck) {
+      menuCheck.addEventListener('change', function() {
+        if (menuCheck.checked) navMenu.classList.add('active');
+        else navMenu.classList.remove('active');
+      });
+    }
   }
 
-  // 2. SLIDE POP - Ungli jis pill pe hogi, sirf wahi pop hoga
+  // 2. AUTO CENTER POP - Jo pill bich me aayega, wohi bada hoga
   if (navMenu) {
-    function clearPop() {
-      navMenu.querySelectorAll('a').forEach(function(a) {
-        a.classList.remove('pop');
+    function updateCenterPop() {
+      const links = navMenu.querySelectorAll('a');
+      if (!links.length) return;
+
+      const menuRect = navMenu.getBoundingClientRect();
+      const centerY = menuRect.top + menuRect.height / 2;
+
+      let closest = null;
+      let closestDist = 10000;
+
+      links.forEach(function(a) {
+        const r = a.getBoundingClientRect();
+        const pillCenter = r.top + r.height / 2;
+        const dist = Math.abs(pillCenter - centerY);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = a;
+        }
+      });
+
+      links.forEach(a => a.classList.remove('pop'));
+      if (closest) closest.classList.add('pop');
+    }
+
+    // Menu khulte hi bich wala pop hoga
+    if (menuCheck) {
+      menuCheck.addEventListener('change', function() {
+        if (menuCheck.checked) setTimeout(updateCenterPop, 50);
+      });
+    }
+    if (menuBtn) {
+      menuBtn.addEventListener('click', function() {
+        setTimeout(updateCenterPop, 50);
       });
     }
 
-    navMenu.addEventListener('touchmove', function(e) {
-      const t = e.touches[0];
-      const el = document.elementFromPoint(t.clientX, t.clientY);
-      const link = el ? el.closest('a') : null;
-      clearPop();
-      if (link && navMenu.contains(link)) {
-        link.classList.add('pop');
-      }
-    }, { passive: true });
-
+    // Slide / Scroll karte time bich wala badalta rahega
+    navMenu.addEventListener('scroll', updateCenterPop, { passive: true });
+    navMenu.addEventListener('touchmove', updateCenterPop, { passive: true });
     navMenu.addEventListener('touchend', function() {
-      setTimeout(clearPop, 150);
-    });
-
-    // Mouse pe bhi pop - PC pe check karne ke liye
-    navMenu.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('mouseenter', function() {
-        clearPop();
-        a.classList.add('pop');
-      });
-      a.addEventListener('mouseleave', function() {
-        a.classList.remove('pop');
-      });
+      setTimeout(updateCenterPop, 100);
     });
   }
 
   // 3. CERTIFICATE MODAL
   const certModal = document.getElementById('certModal');
+  const certImage = document.getElementById('certImage');
   const certModalImg = document.getElementById('certModalImg');
   const certModalDownload = document.getElementById('certModalDownload');
-  const certImage = document.getElementById('certImage');
 
   window.openCertView = function() {
     if (!certModal || !certImage) return;
@@ -86,11 +110,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (certModal) certModal.style.display = 'none';
   };
 
-  // 4. SMOOTH SCROLL - Menu band karke section pe le jayega
+  // 4. SMOOTH SCROLL
   document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     anchor.addEventListener('click', function(e) {
       const targetId = anchor.getAttribute('href');
-      if (targetId.length > 1) {
+      if (targetId && targetId.length > 1) {
         const target = document.querySelector(targetId);
         if (target) {
           e.preventDefault();
@@ -100,5 +124,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  console.log('JS loaded - menu ready');
+  console.log('JS Loaded - Center Pop Ready');
 });
