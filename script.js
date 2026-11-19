@@ -125,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (certModal) certModal.style.display = 'none';
   };
 
-  // VIEW RESUME - Google Docs Viewer se ONLINE kholega, download nahi bolega
   const viewBtn = document.getElementById('viewResumeBtn');
   if (viewBtn) {
     viewBtn.addEventListener('click', function(e) {
