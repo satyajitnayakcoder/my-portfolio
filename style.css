@@ -326,7 +326,7 @@ document.addEventListener("DOMContentLoaded", function () {
 /* 07 BILKUL TOP-LEFT - ARROW WALI JAGAH */
 .contact-section {
   position: relative !important;
-  padding: 70px 9% 60px 9% !important;
+  padding: 30px 9% 60px 9% !important;
   text-align: center !important;
 }
 .contact-section .section-label {
