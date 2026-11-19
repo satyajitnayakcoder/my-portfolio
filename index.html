@@ -14,41 +14,38 @@
   #navLinks.active {
     display: flex !important;
     flex-direction: column !important;
-    gap: 10px !important;
+    gap: 12px !important;
     background: #000 !important;
-    max-height: 70vh !important;
-    overflow-y: auto !important;
-    touch-action: pan-y !important;
-    -webkit-overflow-scrolling: touch !important;
     position: fixed !important;
     top: 80px !important;
     left: 0 !important;
     width: 100% !important;
     padding: 20px !important;
+    max-height: 70vh !important;
+    overflow-y: auto !important;
     z-index: 99999 !important;
-    animation: menuSlide 0.25s ease !important;
-  }
-  @keyframes menuSlide {
-    from { transform: translateY(-15px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    /* Scroll smooth hoga, upar-neeche hilenga */
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
   }
   /* Sab pills normal */
   #navLinks a {
     background: #1a1a1a !important;
+    color: #fff !important;
     border-radius: 50px !important;
-    padding: 12px 20px !important;
+    padding: 14px 20px !important;
+    text-align: center !important;
     transform: scale(1) !important;
     transition: transform 0.15s ease, background 0.15s ease !important;
+    will-change: transform !important;
   }
-  /* Sirf jisko ungli se chhua, wahi pop hoga */
-  #navLinks a:active {
-    transform: scale(1.08) !important;
-    background: #333 !important;
+  /* Sirf jiske upar ungli hai, wahi pop */
+  #navLinks a.pop {
+    transform: scale(1.12) !important;
+    background: #3a3a3a !important;
+    box-shadow: 0 8px 25px rgba(255,255,255,0.25) !important;
   }
-}
-#navLinks a.pop {
-  transform: scale(1.12) !important;
-  background: #333 !important;
 }
 </style>
 </head>
@@ -209,23 +206,35 @@ Based in Jajpur, Odisha, India.</p>
 document.getElementById("menuBtn").onclick = function() {
   document.getElementById("navLinks").classList.toggle("active");
 };
-</script>
 <script>
-const nav = document.getElementById('navLinks');
-if (nav) {
-  nav.addEventListener('touchmove', function(e) {
+const navMenu = document.getElementById('navLinks');
+if (navMenu) {
+  function clearPop() {
+    navMenu.querySelectorAll('a').forEach(a => a.classList.remove('pop'));
+  }
+  // Ungli slide karte time jo pill ungli ke neeche hai, sirf wahi pop hoga
+  navMenu.addEventListener('touchmove', function(e) {
     const t = e.touches[0];
     const el = document.elementFromPoint(t.clientX, t.clientY);
     const link = el ? el.closest('a') : null;
-    nav.querySelectorAll('a').forEach(a => a.classList.remove('pop'));
-    if (link && nav.contains(link)) {
+    clearPop();
+    if (link && navMenu.contains(link)) {
       link.classList.add('pop');
     }
-  });
-  nav.addEventListener('touchend', function() {
-    setTimeout(() => {
-      nav.querySelectorAll('a').forEach(a => a.classList.remove('pop'));
-    }, 150);
+  }, { passive: true });
+
+  navMenu.addEventListener('touchstart', function(e) {
+    const t = e.touches[0];
+    const el = document.elementFromPoint(t.clientX, t.clientY);
+    const link = el ? el.closest('a') : null;
+    clearPop();
+    if (link && navMenu.contains(link)) {
+      link.classList.add('pop');
+    }
+  }, { passive: true });
+
+  navMenu.addEventListener('touchend', function() {
+    setTimeout(clearPop, 150);
   });
 }
 </script>
