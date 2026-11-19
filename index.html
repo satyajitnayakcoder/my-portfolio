@@ -19,32 +19,54 @@
   padding: 5px 10px !important;
   color: #fff !important;
 }
+/* MENU KHULTE HI - Navbar / Menu Bar Gayab */
+body.menu-open-body .navbar {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+body.menu-open-body .logo {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+body.menu-open-body .menu-toggle {
+  background: rgba(20,20,25,0.9) !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  border-radius: 50% !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 22px !important;
+}
 @media (max-width: 900px) {
   #navLinks { display: none !important; }
   #navLinks.menu-open {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 10px !important;
-    /* BG BOX HATA DIYA - Bilkul transparent, koi box nahi */
+    gap: 12px !important;
+    /* NO BG BOX - Bilkul transparent */
     background: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     border: none !important;
     box-shadow: none !important;
-    /* Screen ke bich me, box nahi sirf pills */
+    /* Pills Bilkul Bich Me */
     position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 90% !important;
-    max-width: 360px !important;
-    height: 380px !important;
-    max-height: none !important;
-    padding-top: 165px !important;
-    padding-bottom: 165px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: 100dvh !important;
+    padding-top: calc(50dvh - 25px) !important;
+    padding-bottom: calc(50dvh - 25px) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     overflow-y: scroll !important;
     overflow-x: hidden !important;
     overscroll-behavior: auto !important;
@@ -55,20 +77,21 @@
   }
   #navLinks.menu-open::-webkit-scrollbar { display: none !important; }
   #navLinks a {
-    background: rgba(20, 20, 25, 0.85) !important;
+    background: rgba(20, 20, 25, 0.9) !important;
     color: #fff !important;
     border: 1px solid rgba(255, 255, 255, 0.25) !important;
     border-radius: 50px !important;
     padding: 13px 20px !important;
     text-align: center !important;
-    width: 100% !important;
+    width: 280px !important;
+    max-width: 85vw !important;
     flex-shrink: 0 !important;
     transform: scale(0.95) !important;
     transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border 0.2s ease !important;
     will-change: transform !important;
     touch-action: pan-y !important;
   }
-  /* BICH WALA PILL - Pop + White Border Glow */
+  /* BICH WALA - Pop + White Border Glow */
   #navLinks a.pop {
     transform: scale(1.15) !important;
     background: rgba(255, 255, 255, 0.95) !important;

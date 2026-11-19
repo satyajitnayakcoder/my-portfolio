@@ -1,4 +1,4 @@
-// FULL JS - No BG Box, Sirf Pills Bich Me, Centre Pop + White Glow
+// FULL JS - No BG, No Menu Bar, Sirf Pills Bich Me
 document.addEventListener('DOMContentLoaded', function() {
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navLinks');
@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function openMenu() {
     navMenu.classList.add('menu-open');
     navMenu.style.setProperty('display', 'flex', 'important');
+    document.body.classList.add('menu-open-body'); // Menu bar gayab
+    menuBtn.textContent = '✕'; // 3 dot -> Cross
     setTimeout(function() {
       navMenu.scrollTop = 0;
       updateCenterPop();
@@ -15,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function closeMenu() {
     navMenu.classList.remove('menu-open');
     navMenu.style.setProperty('display', 'none', 'important');
+    document.body.classList.remove('menu-open-body'); // Menu bar wapas
+    menuBtn.textContent = '☰';
   }
   function toggleMenu() {
     if (navMenu.classList.contains('menu-open')) closeMenu();
@@ -42,8 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateCenterPop() {
     const links = navMenu.querySelectorAll('a');
     if (!links.length) return;
-    const menuRect = navMenu.getBoundingClientRect();
-    const centerY = menuRect.top + menuRect.height / 2;
+    const centerY = window.innerHeight / 2;
     let closest = null;
     let closestDist = 10000;
     links.forEach(function(a) {
