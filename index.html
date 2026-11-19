@@ -11,6 +11,26 @@
  <style>
 @media (max-width: 900px) {
   #navLinks { display: none !important; }
+  /* Checkbox tick hoga toh menu khulega - bina JS ke bhi */
+  #menuCheck:checked ~ #navLinks {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    background: #000 !important;
+    position: fixed !important;
+    top: 80px !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 20px !important;
+    max-height: 45vh !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    z-index: 99999 !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+  }
+  /* JS se khulega toh bhi same style */
   #navLinks.active {
     display: flex !important;
     flex-direction: column !important;
@@ -57,6 +77,8 @@
 
   <header class="navbar">
     <a href="#home" class="logo">SATYAJIT<span>.</span></a>
+    <input type="checkbox" id="menuCheck" style="display:none;">
+    <label for="menuCheck" class="menu-toggle" id="menuBtn">☰</label>
     <nav class="nav-links" id="navLinks">
       <a href="#home" class="active">HOME</a>
       <a href="#about">ABOUT</a>
@@ -68,7 +90,6 @@
       <a href="#contact" class="talk-button">LET'S TALK →</a>
       <span id="navSlider"></span>
     </nav>
-    <button class="menu-toggle" id="menuBtn">☰</button>
   </header>
 
   <section class="hero" id="home">
@@ -205,40 +226,6 @@ Based in Jajpur, Odisha, India.</p>
 
   <div id="glassSlide"></div>
 
-  <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const navMenu = document.getElementById('navLinks');
-
-    if (menuBtn && navMenu) {
-      menuBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        navMenu.classList.toggle('active');
-      });
-
-      navMenu.querySelectorAll('a').forEach(function(link) {
-        link.addEventListener('click', function() {
-          navMenu.classList.remove('active');
-        });
-      });
-
-      function clearPop() {
-        navMenu.querySelectorAll('a').forEach(a => a.classList.remove('pop'));
-      }
-
-      navMenu.addEventListener('touchmove', function(e) {
-        const t = e.touches[0];
-        const el = document.elementFromPoint(t.clientX, t.clientY);
-        const link = el ? el.closest('a') : null;
-        clearPop();
-        if (link && navMenu.contains(link)) {
-          link.classList.add('pop');
-        }
-      }, { passive: true });
-
-      navMenu.addEventListener('touchend', function() {
-        setTimeout(clearPop, 150);
-      });
-    }
-  </script>
+  <script src="./script.js"></script>
 </body>
 </html>
