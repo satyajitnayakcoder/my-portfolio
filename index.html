@@ -19,6 +19,25 @@
   padding: 5px 10px !important;
   color: #fff !important;
 }
+/* CROSS BUTTON FIX - Body me hoga, menu se bhi upar */
+body > .menu-toggle {
+  position: fixed !important;
+  top: 14px !important;
+  right: 16px !important;
+  z-index: 100001 !important;
+  pointer-events: auto !important;
+}
+body.menu-open-body > .menu-toggle {
+  background: rgba(20,20,25,0.95) !important;
+  border: 1px solid rgba(255,255,255,0.4) !important;
+  border-radius: 50% !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 22px !important;
+}
 /* MENU KHULTE HI - Navbar / Menu Bar Gayab */
 body.menu-open-body .navbar {
   background: transparent !important;
@@ -30,17 +49,6 @@ body.menu-open-body .navbar {
 body.menu-open-body .logo {
   opacity: 0 !important;
   pointer-events: none !important;
-}
-body.menu-open-body .menu-toggle {
-  background: rgba(20,20,25,0.9) !important;
-  border: 1px solid rgba(255,255,255,0.3) !important;
-  border-radius: 50% !important;
-  width: 44px !important;
-  height: 44px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size: 22px !important;
 }
 @media (max-width: 900px) {
   #navLinks { display: none !important; }

@@ -1,13 +1,17 @@
-// FULL JS - Nav ko body me nikal kar BILKUL BICH ME, No BG, No Menu Bar
+// FULL JS - Cross button fix, Nav + Button dono body me, Pills bich me
 document.addEventListener('DOMContentLoaded', function() {
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navLinks');
   if (!menuBtn || !navMenu) return;
 
-  // FIX: Nav ko header ke andar se nikal ke body me daal do
-  // Nahi toh header ka filter usko upar chipka deta hai
+  // FIX 1: Nav ko header se nikal ke body me
   if (navMenu.parentElement !== document.body) {
     document.body.appendChild(navMenu);
+  }
+  // FIX 2: Cross button ko bhi header se nikal ke body me
+  // Nahi toh menu uske upar aa jata hai aur dabta nahi
+  if (menuBtn.parentElement !== document.body) {
+    document.body.appendChild(menuBtn);
   }
 
   function centrePills() {
@@ -42,11 +46,18 @@ document.addEventListener('DOMContentLoaded', function() {
     else openMenu();
   }
 
+  // Cross / 3-dot - dono kaam karega
   menuBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     e.preventDefault();
     toggleMenu();
   });
+  // Mobile ke liye touch bhi
+  menuBtn.addEventListener('touchend', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    toggleMenu();
+  }, { passive: false });
 
   navMenu.querySelectorAll('a').forEach(function(link) {
     link.addEventListener('click', function() {
@@ -54,8 +65,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  // Bahar kahin bhi dabao toh band
   document.addEventListener('click', function(e) {
-    if (navMenu.classList.contains('menu-open') && !navMenu.contains(e.target) && e.target !== menuBtn) {
+    if (navMenu.classList.contains('menu-open') && !navMenu.contains(e.target) && e.target !== menuBtn && !menuBtn.contains(e.target)) {
       closeMenu();
     }
   });
