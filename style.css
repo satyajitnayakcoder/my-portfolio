@@ -349,3 +349,16 @@ document.addEventListener("DOMContentLoaded", function () {
     top: 15px !important;
   }
 }
+/* 07 OVERLAP FIX - ABSOLUTE HATAO */
+.contact-section .section-label {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  display: block !important;
+  text-align: left !important;
+  margin: 0 0 10px 0 !important;
+  padding: 0 !important;
+}
+.contact-section {
+  padding: 40px 7% 60px 7% !important;
+}
