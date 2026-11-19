@@ -129,8 +129,6 @@ document.addEventListener("DOMContentLoaded", function () {
     footerText.textContent = "© " + currentYear + " SATYAJIT NAYAK. ALL RIGHTS RESERVED.";
   }
     });
-  }, { threshold: 0.05 });
-});
 
 function openCertView() {
   const img = document.getElementById("certImage");
