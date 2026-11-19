@@ -240,3 +240,34 @@ document.addEventListener("DOMContentLoaded", function () {
     display: flex !important;
   }
 }
+/* HOVER POP-UP EFFECT */
+.nav-links a {
+  transition: all 0.25s ease !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.nav-links a:hover,
+.nav-links a:active,
+.nav-links a:focus {
+  transform: scale(1.08) translateY(-2px) !important;
+  background: rgba(255, 255, 255, 0.28) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45), 0 0 20px rgba(255, 255, 255, 0.25) !important;
+  color: #fff !important;
+  z-index: 10 !important;
+}
+
+/* Desktop navbar ke liye bhi same */
+.navbar a:hover {
+  transform: scale(1.1) !important;
+  transition: all 0.25s ease !important;
+}
+
+/* Phone me touch karne pe pop-up ke liye */
+@media (max-width: 768px) {
+  .nav-links a:active {
+    transform: scale(1.1) !important;
+  }
+}
