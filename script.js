@@ -203,6 +203,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-document.getElementById("menuBtn").onclick = function() {
-  document.querySelector(".nav-links").classList.toggle("active");
-};
