@@ -8,31 +8,38 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./style.css" />
-  <style>
+ <style>
 @media (max-width: 900px) {
   #navLinks { display: none !important; }
   #navLinks.active {
     display: flex !important;
     flex-direction: column !important;
     gap: 10px !important;
-    background: #111 !important;
+    background: #000 !important;
     position: fixed !important;
     top: 80px !important;
     left: 0 !important;
     width: 100% !important;
     padding: 20px !important;
     z-index: 99999 !important;
+    animation: menuSlide 0.25s ease !important;
   }
+  @keyframes menuSlide {
+    from { transform: translateY(-15px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  /* Sab pills normal */
   #navLinks a {
-    background: rgba(255, 255, 255, 0.08) !important;
+    background: #1a1a1a !important;
     border-radius: 50px !important;
     padding: 12px 20px !important;
     transform: scale(1) !important;
-    transition: transform 0.15s ease !important;
+    transition: transform 0.15s ease, background 0.15s ease !important;
   }
+  /* Sirf jisko ungli se chhua, wahi pop hoga */
   #navLinks a:active {
     transform: scale(1.08) !important;
-    background: rgba(255, 255, 255, 0.18) !important;
+    background: #333 !important;
   }
 }
 </style>
@@ -52,7 +59,7 @@
       <a href="#contact" class="talk-button">LET'S TALK →</a>
       <span id="navSlider"></span>
     </nav>
-    <button class="menu-toggle" id="menuBtn" onclick="alert('button kaam kar raha hai')">☰</button>
+    <button class="menu-toggle" id="menuBtn">☰</button>
   </header>
 
   <section class="hero" id="home">
