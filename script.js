@@ -1,4 +1,4 @@
-// FULL JS - Box bich me fixed, pills andar scroll + Centre Pop
+// FULL JS - No BG Box, Sirf Pills Bich Me, Centre Pop + White Glow
 document.addEventListener('DOMContentLoaded', function() {
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navLinks');
