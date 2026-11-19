@@ -37,15 +37,15 @@
     width: 100% !important;
     height: calc(100vh - 70px) !important;
     max-height: none !important;
-    /* SAHI FIX - Ab HOME bhi bich me, LET'S TALK bhi bich me */
     padding-top: calc(50vh - 60px) !important;
     padding-bottom: calc(50vh - 60px) !important;
     padding-left: 20px !important;
     padding-right: 20px !important;
-    overflow-y: auto !important;
-    overscroll-behavior: contain !important;
+    /* SCROLL FIX - auto ki jagah scroll + lock hataya */
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: auto !important;
     z-index: 99999 !important;
-    scroll-behavior: smooth !important;
     -webkit-overflow-scrolling: touch !important;
     touch-action: pan-y !important;
   }
@@ -60,6 +60,7 @@
     transform: scale(1) !important;
     transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease !important;
     will-change: transform !important;
+    touch-action: pan-y !important;
   }
   #navLinks a.pop {
     transform: scale(1.15) !important;

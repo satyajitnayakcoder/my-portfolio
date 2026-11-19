@@ -1,4 +1,4 @@
-// FULL JS - Har pill bich me aayega + ONLY Centre Pop
+// FULL JS - Manual Scroll + Centre Pop + Navbar jaisa BG
 document.addEventListener('DOMContentLoaded', function() {
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navLinks');
@@ -26,11 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     toggleMenu();
   });
-  menuBtn.addEventListener('touchstart', function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    toggleMenu();
-  }, { passive: false });
 
   navMenu.querySelectorAll('a').forEach(function(link) {
     link.addEventListener('click', function() {
@@ -44,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  // ===== CENTRE POP =====
   function updateCenterPop() {
     const links = navMenu.querySelectorAll('a');
     if (!links.length) return;
@@ -64,12 +60,36 @@ document.addEventListener('DOMContentLoaded', function() {
     if (closest) closest.classList.add('pop');
   }
 
-  navMenu.addEventListener('scroll', updateCenterPop, { passive: true });
-  navMenu.addEventListener('touchmove', updateCenterPop, { passive: true });
+  // ===== MANUAL DRAG SCROLL - CSS atak bhi jaye toh ye chalega =====
+  let startY = 0, startScroll = 0, isDragging = false;
+
+  navMenu.addEventListener('touchstart', function(e) {
+    isDragging = true;
+    startY = e.touches[0].clientY;
+    startScroll = navMenu.scrollTop;
+  }, { passive: true });
+
+  navMenu.addEventListener('touchmove', function(e) {
+    if (!isDragging) return;
+    const y = e.touches[0].clientY;
+    const diff = startY - y; // upar swipe = neeche scroll
+    navMenu.scrollTop = startScroll + diff;
+    updateCenterPop();
+  }, { passive: true });
+
   navMenu.addEventListener('touchend', function() {
+    isDragging = false;
     setTimeout(updateCenterPop, 100);
   });
 
+  navMenu.addEventListener('scroll', updateCenterPop, { passive: true });
+
+  // Mouse wheel se bhi scroll
+  navMenu.addEventListener('wheel', function() {
+    setTimeout(updateCenterPop, 50);
+  }, { passive: true });
+
+  // CERTIFICATE
   const certModal = document.getElementById('certModal');
   const certImage = document.getElementById('certImage');
   window.openCertView = function() {
@@ -82,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (certModal) certModal.style.display = 'none';
   };
 
+  // SMOOTH SCROLL
   document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     a.addEventListener('click', function(e) {
       const id = a.getAttribute('href');
