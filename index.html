@@ -25,12 +25,10 @@
     overflow-y: auto !important;
     overscroll-behavior: contain !important;
     z-index: 99999 !important;
-    /* Scroll smooth hoga, upar-neeche hilenga */
     scroll-behavior: smooth !important;
     -webkit-overflow-scrolling: touch !important;
     touch-action: pan-y !important;
   }
-  /* Sab pills normal */
   #navLinks a {
     background: #1a1a1a !important;
     color: #fff !important;
@@ -41,11 +39,16 @@
     transition: transform 0.15s ease, background 0.15s ease !important;
     will-change: transform !important;
   }
-  /* Sirf jiske upar ungli hai, wahi pop */
   #navLinks a.pop {
     transform: scale(1.12) !important;
     background: #3a3a3a !important;
     box-shadow: 0 8px 25px rgba(255,255,255,0.25) !important;
+  }
+  #navSlider { display: none !important; }
+  .menu-toggle {
+    display: block !important;
+    z-index: 100000 !important;
+    cursor: pointer !important;
   }
 }
 </style>
@@ -200,34 +203,42 @@ Based in Jajpur, Odisha, India.</p>
     <a id="certModalDownload" href="#" download class="primary-button" onclick="event.stopPropagation()">DOWNLOAD CERTIFICATE ↓</a>
   </div>
 
-  <script src="./script.js"></script>
-  <!-- CONTACT / TALK TO ME SECTION -->
-<div id="glassSlide"></div>
-<script>
-document.getElementById("menuBtn").onclick = function() {
-  document.getElementById("navLinks").classList.toggle("active");
-};
-<script>
-const navMenu = document.getElementById('navLinks');
-if (navMenu) {
-  function clearPop() {
-    navMenu.querySelectorAll('a').forEach(a => a.classList.remove('pop'));
-  }
-  // Ungli slide karte time jo pill ungli ke neeche hai, sirf wahi pop hoga
-  navMenu.addEventListener('touchmove', function(e) {
-    const t = e.touches[0];
-    const el = document.elementFromPoint(t.clientX, t.clientY);
-    const link = el ? el.closest('a') : null;
-    clearPop();
-    if (link && navMenu.contains(link)) {
-      link.classList.add('pop');
-    }
-  }, { passive: true });
+  <div id="glassSlide"></div>
 
-  navMenu.addEventListener('touchend', function() {
-    setTimeout(clearPop, 150);
-  });
-}
-</script>
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navMenu = document.getElementById('navLinks');
+
+    if (menuBtn && navMenu) {
+      menuBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        navMenu.classList.toggle('active');
+      });
+
+      navMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          navMenu.classList.remove('active');
+        });
+      });
+
+      function clearPop() {
+        navMenu.querySelectorAll('a').forEach(a => a.classList.remove('pop'));
+      }
+
+      navMenu.addEventListener('touchmove', function(e) {
+        const t = e.touches[0];
+        const el = document.elementFromPoint(t.clientX, t.clientY);
+        const link = el ? el.closest('a') : null;
+        clearPop();
+        if (link && navMenu.contains(link)) {
+          link.classList.add('pop');
+        }
+      }, { passive: true });
+
+      navMenu.addEventListener('touchend', function() {
+        setTimeout(clearPop, 150);
+      });
+    }
+  </script>
 </body>
 </html>
