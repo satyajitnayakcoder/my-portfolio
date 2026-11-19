@@ -8,37 +8,178 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
  <style>
-.navbar { height: 60px !important; display: flex !important; align-items: center !important; }
-.menu-toggle { display: block !important; font-size: 28px !important; cursor: pointer !important; z-index: 100000 !important; user-select: none !important; -webkit-tap-highlight-color: transparent !important; padding: 0 !important; margin: 0 !important; color: #fff !important; touch-action: manipulation !important; line-height: 44px !important; }
-body > .menu-toggle { position: fixed !important; top: 17.5px !important; right: 16px !important; width: 44px !important; height: 44px !important; z-index: 100001 !important; pointer-events: auto !important; display: flex !important; align-items: center !important; justify-content: center !important; transform: none !important; }
-body.menu-open-body > .menu-toggle { top: 17.5px !important; background: rgba(20,20,25,0.95) !important; border: 1px solid rgba(255,255,255,0.4) !important; border-radius: 50% !important; width: 44px !important; height: 44px !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 22px !important; }
-body.menu-open-body .navbar { background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border: none !important; box-shadow: none !important; }
-body.menu-open-body .logo { opacity: 0 !important; pointer-events: none !important; }
-#resume .resume-preview, .resume-card { width: 360px !important; max-width: 88vw !important; height: 230px !important; min-height: 230px !important; max-height: 230px !important; margin: 0 auto !important; padding: 28px 20px !important; overflow: hidden !important; border-radius: 16px !important; border: 1px solid rgba(255,255,255,0.15) !important; background: #111 !important; text-align: center !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 12px !important; }
+/* NAVBAR - 60px height, sab centre me */
+.navbar {
+  height: 60px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.menu-toggle {
+  display: block !important;
+  font-size: 28px !important;
+  cursor: pointer !important;
+  z-index: 100000 !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #fff !important;
+  touch-action: manipulation !important;
+  line-height: 44px !important;
+}
+/* HAMBURGER - Right side, bilkul centre me - FINAL 17.5px */
+body > .menu-toggle {
+  position: fixed !important;
+  top: 17.5px !important;
+  right: 16px !important;
+  width: 44px !important;
+  height: 44px !important;
+  z-index: 100001 !important;
+  pointer-events: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+}
+body.menu-open-body > .menu-toggle {
+  top: 17.5px !important;
+  background: rgba(20,20,25,0.95) !important;
+  border: 1px solid rgba(255,255,255,0.4) !important;
+  border-radius: 50% !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 22px !important;
+}
+body.menu-open-body .navbar {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+body.menu-open-body .logo {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+/* RESUME - Certificate jaisa chhota Card */
+#resume .resume-preview,
+.resume-card {
+  width: 360px !important;
+  max-width: 88vw !important;
+  height: 230px !important;
+  min-height: 230px !important;
+  max-height: 230px !important;
+  margin: 0 auto !important;
+  padding: 28px 20px !important;
+  overflow: hidden !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  background: #111 !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+}
 #resume .resume-preview iframe { display: none !important; }
-.resume-card .pdf-icon { width: 64px !important; height: 64px !important; border-radius: 12px !important; background: #e74c3c !important; color: #fff !important; font-weight: 900 !important; font-size: 18px !important; display: flex !important; align-items: center !important; justify-content: center !important; letter-spacing: 1px !important; }
+.resume-card .pdf-icon {
+  width: 64px !important;
+  height: 64px !important;
+  border-radius: 12px !important;
+  background: #e74c3c !important;
+  color: #fff !important;
+  font-weight: 900 !important;
+  font-size: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  letter-spacing: 1px !important;
+}
 .resume-card h3 { margin: 0 !important; font-size: 18px !important; color: #fff !important; }
 .resume-card p { margin: 0 !important; font-size: 14px !important; color: #aaa !important; }
 .resume-card .resume-btns { display: flex !important; gap: 10px !important; margin-top: 8px !important; flex-wrap: wrap !important; justify-content: center !important; }
-.resume-card .resume-btns a { padding: 10px 18px !important; border-radius: 50px !important; font-size: 14px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-block !important; }
+.resume-card .resume-btns a {
+  padding: 10px 18px !important;
+  border-radius: 50px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+}
 .resume-card .view-btn { background: #fff !important; color: #000 !important; }
 .resume-card .dl-btn { background: transparent !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.4) !important; }
 #resume .resume-note { text-align: center !important; margin-top: 14px !important; }
 @media (max-width: 900px) {
   #navLinks { display: none !important; }
-  #navLinks.menu-open { display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: flex-start !important; gap: 12px !important; background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border: none !important; box-shadow: none !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; transform: none !important; width: 100% !important; max-width: none !important; height: 100vh !important; height: 100dvh !important; padding-top: 50vh !important; padding-bottom: 50vh !important; padding-left: 0 !important; padding-right: 0 !important; margin: 0 !important; overflow-y: scroll !important; overflow-x: hidden !important; overscroll-behavior: auto !important; z-index: 99999 !important; -webkit-overflow-scrolling: touch !important; touch-action: pan-y !important; scrollbar-width: none !important; }
+  #navLinks.menu-open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    padding-top: 50vh !important;
+    padding-bottom: 50vh !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: auto !important;
+    z-index: 99999 !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    scrollbar-width: none !important;
+  }
   #navLinks.menu-open::-webkit-scrollbar { display: none !important; }
-  #navLinks a { background: rgba(20, 20, 25, 0.9) !important; color: #fff !important; border: 1px solid rgba(255, 255, 255, 0.25) !important; border-radius: 50px !important; padding: 13px 20px !important; text-align: center !important; width: 280px !important; max-width: 85vw !important; flex-shrink: 0 !important; transform: scale(0.95) !important; transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border 0.2s ease !important; will-change: transform !important; touch-action: pan-y !important; }
-  #navLinks a.pop { transform: scale(1.15) !important; background: rgba(255, 255, 255, 0.95) !important; color: #000 !important; font-weight: 700 !important; border: 2px solid #fff !important; box-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 0 10px 30px rgba(255, 255, 255, 0.4) !important; z-index: 2 !important; }
+  #navLinks a {
+    background: rgba(20, 20, 25, 0.9) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 50px !important;
+    padding: 13px 20px !important;
+    text-align: center !important;
+    width: 280px !important;
+    max-width: 85vw !important;
+    flex-shrink: 0 !important;
+    transform: scale(0.95) !important;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border 0.2s ease !important;
+    will-change: transform !important;
+    touch-action: pan-y !important;
+  }
+  #navLinks a.pop {
+    transform: scale(1.15) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 0 10px 30px rgba(255, 255, 255, 0.4) !important;
+    z-index: 2 !important;
+  }
   #navSlider { display: none !important; }
 }
 </style>
 </head>
 <body>
-  <canvas id="particle-canvas"></canvas>
 
   <header class="navbar">
     <a href="#home" class="logo">SATYAJIT<span>.</span></a>
@@ -56,90 +197,145 @@ body.menu-open-body .logo { opacity: 0 !important; pointer-events: none !importa
     </nav>
   </header>
 
-  <section class="hero hero-centre" id="home">
-    <div class="hero-centre-box">
-      <p class="intro always-show">HELLO, I'M</p>
-      <h1 class="always-show">SATYAJIT<br /><span>NAYAK</span></h1>
-      <p class="scroll-hint">↓ SCROLL KARO, SAB AAYEGA ↓</p>
-      <div class="hero-after-scroll">
-        <div class="availability reveal-left"><span class="status-dot"></span> AVAILABLE FOR WORK</div>
-        <h2 class="reveal-right">SOFTWARE DEVELOPER &<br /><span>UI DESIGNER</span></h2>
-        <p class="hero-description reveal-left">MCA Student | Aspiring Web Developer | Passionate about learning, coding, and building creative digital experiences.</p>
-        <div class="hero-buttons reveal-right">
-          <a href="#projects" class="primary-button">VIEW MY WORK ↓</a>
-          <a href="#contact" class="secondary-button">CONTACT ME</a>
-        </div>
-        <div class="hero-image-wrapper reveal-left">
-          <img src="public/my-photo.jpeg" alt="Satyajit Nayak" class="hero-portrait" />
-        </div>
-        <div class="scroll-indicator reveal-right"><span></span> SCROLL DOWN TO EXPLORE</div>
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="availability"><span class="status-dot"></span> AVAILABLE FOR WORK</div>
+      <p class="intro">HELLO, I'M</p>
+      <h1>SATYAJIT<br /><span>NAYAK</span></h1>
+      <h2>SOFTWARE DEVELOPER &<br /><span>UI DESIGNER</span></h2>
+      <p class="hero-description">MCA Student | Aspiring Web Developer | Passionate about learning, coding, and building creative digital experiences.</p>
+      <div class="hero-buttons">
+        <a href="#projects" class="primary-button">VIEW MY WORK ↓</a>
+        <a href="#contact" class="secondary-button">CONTACT ME</a>
       </div>
+      <div class="scroll-indicator"><span></span> SCROLL DOWN TO EXPLORE</div>
+    </div>
+    <div class="hero-image-wrapper">
+      <img src="public/my-photo.jpeg" alt="Satyajit Nayak" class="hero-portrait" />
     </div>
   </section>
 
   <section class="section" id="about">
-    <p class="section-label reveal-left">01 — ABOUT ME</p>
-    <div class="section-heading reveal-right"><h2>Turning Ideas Into<br /><span>Digital Reality.</span></h2></div>
-    <p class="reveal-left">I'm passionate about technology and software development. I enjoy exploring programming concepts, understanding how systems work, and discovering new ways to solve real-world problems. Based in Jajpur, Odisha, India.</p>
-    <div class="about-stats reveal-right"><div><h3>10+</h3><p>PROJECTS DONE</p></div><div><h3>5+</h3><p>TECHNOLOGIES</p></div><div><h3>100%</h3><p>DEDICATION</p></div></div>
+    <p class="section-label">01 — ABOUT ME</p>
+    <div class="section-heading"><h2>Turning Ideas Into<br /><span>Digital Reality.</span></h2></div>
+    <p>I'm passionate about technology and software development. I enjoy exploring programming concepts, understanding how systems work, and discovering new ways to solve real-world problems.
+
+Based in Jajpur, Odisha, India.</p>
+    <div class="about-stats">
+      <div><h3>10+</h3><p>PROJECTS DONE</p></div>
+      <div><h3>5+</h3><p>TECHNOLOGIES</p></div>
+      <div><h3>100%</h3><p>DEDICATION</p></div>
+    </div>
   </section>
 
   <section class="section" id="projects">
-    <p class="section-label reveal-left">02 — MY WORK</p>
-    <div class="section-heading reveal-right"><h2>Featured <span>Projects.</span></h2></div>
+    <p class="section-label">02 — MY WORK</p>
+    <div class="section-heading"><h2>Featured <span>Projects.</span></h2></div>
     <div class="project-grid">
-      <div class="project-card reveal-left"><p class="project-number">PROJECT 01</p><h3>Cyberpunk Portfolio</h3><p>A personal portfolio with dark, neon, and modern design. Smooth scrolling, responsive layout, and a 3D feel.</p><div class="project-tags"><span>HTML</span><span>CSS</span><span>JAVASCRIPT</span><span>VITE</span></div><a href="#home">VIEW PROJECT →</a></div>
-      <div class="project-card reveal-right"><p class="project-number">PROJECT 02</p><h3>Smart Calculator App</h3><p>A simple and fast calculator with a clean UI. Mobile-friendly with dark mode support.</p><div class="project-tags"><span>HTML</span><span>CSS</span><span>JS</span></div><a href="#contact">VIEW PROJECT →</a></div>
-      <div class="project-card reveal-left"><p class="project-number">PROJECT 03</p><h3>E-Commerce UI</h3><p>A modern shopping website UI with product cards, cart layout, and responsive design.</p><div class="project-tags"><span>UI DESIGN</span><span>CSS GRID</span></div><a href="#contact">VIEW PROJECT →</a></div>
-      <div class="project-card reveal-right"><p class="project-number">PROJECT 04</p><h3>Weather App UI</h3><p>A clean UI concept to display live weather. Built with API and modern card design.</p><div class="project-tags"><span>JAVASCRIPT</span><span>API</span></div><a href="#contact">VIEW PROJECT →</a></div>
+      <div class="project-card">
+        <p class="project-number">PROJECT 01</p>
+        <h3>Cyberpunk Portfolio</h3>
+        <p>A personal portfolio with dark, neon, and modern design. Smooth scrolling, responsive layout, and a 3D feel.</p>
+        <div class="project-tags"><span>HTML</span><span>CSS</span><span>JAVASCRIPT</span><span>VITE</span></div>
+        <a href="#home">VIEW PROJECT →</a>
+      </div>
+      <div class="project-card">
+        <p class="project-number">PROJECT 02</p>
+        <h3>Smart Calculator App</h3>
+        <p>A simple and fast calculator with a clean UI. Mobile-friendly with dark mode support.</p>
+        <div class="project-tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+        <a href="#contact">VIEW PROJECT →</a>
+      </div>
+      <div class="project-card">
+        <p class="project-number">PROJECT 03</p>
+        <h3>E-Commerce UI</h3>
+        <p>A modern shopping website UI with product cards, cart layout, and responsive design.</p>
+        <div class="project-tags"><span>UI DESIGN</span><span>CSS GRID</span></div>
+        <a href="#contact">VIEW PROJECT →</a>
+      </div>
+      <div class="project-card">
+        <p class="project-number">PROJECT 04</p>
+        <h3>Weather App UI</h3>
+        <p>A clean UI concept to display live weather. Built with API and modern card design.</p>
+        <div class="project-tags"><span>JAVASCRIPT</span><span>API</span></div>
+        <a href="#contact">VIEW PROJECT →</a>
+      </div>
     </div>
   </section>
 
   <section class="section" id="skills">
-    <p class="section-label reveal-left">03 — WHAT I KNOW</p>
-    <div class="section-heading reveal-right"><h2>My <span>Skills.</span></h2></div>
+    <p class="section-label">03 — WHAT I KNOW</p>
+    <div class="section-heading"><h2>My <span>Skills.</span></h2></div>
     <div class="skills-grid">
-      <div class="skill-card reveal-left"><h3>HTML & CSS</h3><p>Pixel-perfect responsive layouts.</p><div class="skill-bar"><span style="width:90%"></span></div></div>
-      <div class="skill-card reveal-right"><h3>JavaScript</h3><p>Interactive, dynamic websites.</p><div class="skill-bar"><span style="width:80%"></span></div></div>
-      <div class="skill-card reveal-left"><h3>UI / UX Design</h3><p>Clean, modern, user-friendly design.</p><div class="skill-bar"><span style="width:85%"></span></div></div>
-      <div class="skill-card reveal-right"><h3>Three.js / Vite</h3><p>3D effects aur fast modern tooling.</p><div class="skill-bar"><span style="width:65%"></span></div></div>
+      <div class="skill-card"><h3>HTML & CSS</h3><p>Pixel-perfect responsive layouts.</p><div class="skill-bar"><span style="width:90%"></span></div></div>
+      <div class="skill-card"><h3>JavaScript</h3><p>Interactive, dynamic websites.</p><div class="skill-bar"><span style="width:80%"></span></div></div>
+      <div class="skill-card"><h3>UI / UX Design</h3><p>Clean, modern, user-friendly design.</p><div class="skill-bar"><span style="width:85%"></span></div></div>
+      <div class="skill-card"><h3>Three.js / Vite</h3><p>3D effects aur fast modern tooling.</p><div class="skill-bar"><span style="width:65%"></span></div></div>
     </div>
   </section>
 
   <section class="section" id="experience">
-    <p class="section-label reveal-left">04 — JOURNEY</p>
-    <div class="section-heading reveal-right"><h2>My <span>Journey.</span></h2></div>
+    <p class="section-label">04 — JOURNEY</p>
+    <div class="section-heading"><h2>My <span>Journey.</span></h2></div>
     <div class="timeline">
-      <div class="timeline-item reveal-left"><span>2025 - PRESENT</span><h3>Frontend Developer — Self Learning</h3><p>Learning HTML, CSS, JavaScript, and Vite while building real-world projects.</p></div>
-      <div class="timeline-item reveal-right"><span>2024 - 2025</span><h3>Design & Basics</h3><p>Built a foundation in design principles, color theory, and basic programming.</p></div>
-      <div class="timeline-item reveal-left"><span>2023 - 2024</span><h3>Started Coding</h3><p>Started coding out of curiosity, beginning with my first website.</p></div>
+      <div class="timeline-item"><span>2025 - PRESENT</span><h3>Frontend Developer — Self Learning</h3><p>Learning HTML, CSS, JavaScript, and Vite while building real-world projects, including portfolios, UI clones, and small applications.</p></div>
+      <div class="timeline-item"><span>2024 - 2025</span><h3>Design & Basics</h3><p>Built a foundation in design principles, color theory, and basic programming.</p></div>
+      <div class="timeline-item"><span>2023 - 2024</span><h3>Started Coding</h3><p>Started coding out of curiosity, beginning with my first website and gradually developing my skills.</p></div>
     </div>
   </section>
 
   <section class="section" id="certificates">
-    <p class="section-label reveal-left">05 — ACHIEVEMENTS</p>
-    <div class="section-heading reveal-right"><h2>My <span>Certificate.</span></h2></div>
-    <div class="cert-slider reveal-left"><div class="cert-card"><img id="certImage" src="public/certificate.jpeg" alt="Certificate" onclick="openCertView()" /><h3>Web Development Certificate</h3><p>Click image to view full size. You can also download it.</p></div></div>
+    <p class="section-label">05 — ACHIEVEMENTS</p>
+    <div class="section-heading"><h2>My <span>Certificate.</span></h2></div>
+    <div class="cert-slider">
+      <div class="cert-card">
+        <img id="certImage" src="public/certificate.jpeg" alt="Certificate" onclick="openCertView()" />
+        <h3>Web Development Certificate</h3>
+        <p>Click image to view full size. You can also download it.</p>
+      </div>
+    </div>
   </section>
 
   <section class="section" id="resume">
-    <p class="section-label reveal-left">06 — RESUME</p>
-    <div class="section-heading reveal-right"><h2>My <span>Resume.</span></h2></div>
-    <div class="resume-preview resume-card reveal-left"><div class="pdf-icon">PDF</div><h3>Satyajit Nayak — Resume</h3><p>Click View to open, or Download to save.</p><div class="resume-btns"><a href="#" id="viewResumeBtn" class="view-btn">VIEW RESUME ↗</a><a href="public/resume.pdf" download class="dl-btn">DOWNLOAD ↓</a></div></div>
+    <p class="section-label">06 — RESUME</p>
+    <div class="section-heading"><h2>My <span>Resume.</span></h2></div>
+    <div class="resume-preview resume-card">
+      <div class="pdf-icon">PDF</div>
+      <h3>Satyajit Nayak — Resume</h3>
+      <p>Click View to open, or Download to save.</p>
+      <div class="resume-btns">
+        <a href="#" id="viewResumeBtn" class="view-btn">VIEW RESUME ↗</a>
+        <a href="public/resume.pdf" download class="dl-btn">DOWNLOAD ↓</a>
+      </div>
+    </div>
   </section>
 
   <section class="section contact-section" id="contact">
-    <p class="section-label reveal-left">07 — GET IN TOUCH</p>
-    <div class="section-heading reveal-right"><h2>Let's Build Something<br /><span>Amazing Together.</span></h2></div>
-    <p class="reveal-left">Have a project or want to collaborate? Feel free to message me.</p>
-    <a href="mailto:satyajitnayak.in@gmail.com" class="primary-button reveal-left">SEND EMAIL ↗</a>
-    <div class="contact-links reveal-right"><a href="https://instagram.com/realsatyaaa" target="_blank">INSTAGRAM ↗</a><a href="https://github.com/satyajitnayakcoder" target="_blank">GITHUB ↗</a><a href="https://www.linkedin.com/in/satyajit-nayak-462b08428" target="_blank">LINKEDIN ↗</a></div>
+    <p class="section-label">07 — GET IN TOUCH</p>
+    <div class="section-heading"><h2>Let's Build Something<br /><span>Amazing Together.</span></h2></div>
+    <p>Have a project or want to collaborate? Or just want to have a chat? Feel free to message me. I'll get back to you as soon as possible!</p>
+    <a href="mailto:satyajitnayak.in@gmail.com" class="primary-button"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" style="width:22px;height:22px;vertical-align:middle;margin-right:8px;"> SEND EMAIL ↗</a>
+    <div class="contact-links">
+  <a href="https://instagram.com/realsatyaaa" target="_blank"><img src="https://cdn.simpleicons.org/instagram/E4405F" style="width:20px;height:20px;vertical-align:middle;margin-right:8px;"> INSTAGRAM ↗</a>
+  <a href="https://github.com/satyajitnayakcoder" target="_blank"><img src="https://cdn.simpleicons.org/github/white" style="width:20px;height:20px;vertical-align:middle;margin-right:8px;"> GITHUB ↗</a>
+  <a href="https://www.linkedin.com/in/satyajit-nayak-462b08428" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linkedin/linkedin-original.svg" style="width:20px;height:20px;vertical-align:middle;margin-right:8px;"> LINKEDIN ↗</a>
+    </div>
   </section>
 
-  <footer class="reveal-left"><p>© 2026 SATYAJIT NAYAK. ALL RIGHTS RESERVED.</p><a href="#home">BACK TO TOP ↑</a></footer>
+  <footer>
+    <p>© 2026 SATYAJIT NAYAK. ALL RIGHTS RESERVED.</p>
+    <a href="#home">BACK TO TOP ↑</a>
+  </footer>
 
-  <div class="cert-modal" id="certModal" onclick="closeCertView()"><span class="cert-close" onclick="closeCertView()">×</span><img id="certModalImg" src="" alt="Certificate Full View" onclick="event.stopPropagation()" /><p>Web Development Certificate</p><a id="certModalDownload" href="#" download class="primary-button" onclick="event.stopPropagation()">DOWNLOAD CERTIFICATE ↓</a></div>
+  <div class="cert-modal" id="certModal" onclick="closeCertView()">
+    <span class="cert-close" onclick="closeCertView()">×</span>
+    <img id="certModalImg" src="" alt="Certificate Full View" onclick="event.stopPropagation()" />
+    <p>Web Development Certificate</p>
+    <a id="certModalDownload" href="#" download class="primary-button" onclick="event.stopPropagation()">DOWNLOAD CERTIFICATE ↓</a>
+  </div>
+
   <div id="glassSlide"></div>
+
   <script src="./script.js"></script>
 </body>
 </html>
