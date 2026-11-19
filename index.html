@@ -9,26 +9,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./style.css" />
  <style>
-#menuCheck {
-  position: absolute !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  width: 1px !important;
-  height: 1px !important;
-}
 .menu-toggle {
   display: block !important;
-  font-size: 28px !important;
+  font-size: 30px !important;
   cursor: pointer !important;
   z-index: 100000 !important;
   user-select: none !important;
   -webkit-tap-highlight-color: transparent !important;
+  padding: 5px 10px !important;
+  color: #fff !important;
 }
 @media (max-width: 900px) {
   #navLinks { display: none !important; }
-
-  #menuCheck:checked ~ #navLinks,
-  #navLinks.active {
+  #navLinks.menu-open {
     display: flex !important;
     flex-direction: column !important;
     gap: 12px !important;
@@ -45,13 +38,10 @@
     padding: 20px !important;
     max-height: 55vh !important;
     overflow-y: auto !important;
-    overscroll-behavior: contain !important;
     z-index: 99999 !important;
-    scroll-behavior: smooth !important;
     -webkit-overflow-scrolling: touch !important;
     touch-action: pan-y !important;
   }
-
   #navLinks a {
     background: rgba(255, 255, 255, 0.12) !important;
     color: #fff !important;
@@ -60,10 +50,8 @@
     padding: 14px 20px !important;
     text-align: center !important;
     transform: scale(1) !important;
-    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease !important;
-    will-change: transform !important;
+    transition: transform 0.2s ease, background 0.2s ease !important;
   }
-
   #navLinks a.pop {
     transform: scale(1.15) !important;
     background: rgba(255, 255, 255, 0.95) !important;
@@ -72,7 +60,6 @@
     box-shadow: 0 10px 30px rgba(255, 255, 255, 0.35) !important;
     z-index: 2 !important;
   }
-
   #navSlider { display: none !important; }
 }
 </style>
@@ -81,8 +68,7 @@
 
   <header class="navbar">
     <a href="#home" class="logo">SATYAJIT<span>.</span></a>
-    <input type="checkbox" id="menuCheck">
-    <label for="menuCheck" class="menu-toggle" id="menuBtn">☰</label>
+    <div class="menu-toggle" id="menuBtn">☰</div>
     <nav class="nav-links" id="navLinks">
       <a href="#home" class="active">HOME</a>
       <a href="#about">ABOUT</a>

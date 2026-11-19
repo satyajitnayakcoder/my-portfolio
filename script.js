@@ -1,124 +1,94 @@
-// ===== SATYAJIT PORTFOLIO - FULL JS - FIXED MENU + CENTER POP =====
-
+// BULLETPROOF MENU - Checkbox nahi, sirf JS
 document.addEventListener('DOMContentLoaded', function() {
-
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navLinks');
-  const menuCheck = document.getElementById('menuCheck');
 
-  // 1. MENU - 3 LINE BUTTON - JS se bhi khulega, CSS se bhi
-  if (menuBtn && navMenu && menuCheck) {
+  console.log('MenuBtn mila?', !!menuBtn, 'Nav mila?', !!navMenu);
 
-    // Label pe click hoga toh checkbox khud toggle hoga,
-    // hum sirf class sync karenge
-    menuBtn.addEventListener('click', function(e) {
-      // Label ka default kaam hone do, phir class lagao
-      setTimeout(function() {
-        if (menuCheck.checked) {
-          navMenu.classList.add('active');
-          setTimeout(updateCenterPop, 60);
-        } else {
-          navMenu.classList.remove('active');
-        }
-      }, 20);
-    });
+  if (!menuBtn || !navMenu) return;
 
-    // Checkbox change hoga toh class bhi change
-    menuCheck.addEventListener('change', function() {
-      if (menuCheck.checked) {
-        navMenu.classList.add('active');
-        setTimeout(updateCenterPop, 60);
-      } else {
-        navMenu.classList.remove('active');
-      }
-    });
-
-    // Kisi pill pe click -> menu band
-    navMenu.querySelectorAll('a').forEach(function(link) {
-      link.addEventListener('click', function() {
-        navMenu.classList.remove('active');
-        menuCheck.checked = false;
-      });
-    });
-
-    // Bahar click -> band
-    document.addEventListener('click', function(e) {
-      if (
-        navMenu.classList.contains('active') &&
-        !navMenu.contains(e.target) &&
-        e.target !== menuBtn &&
-        !menuBtn.contains(e.target)
-      ) {
-        navMenu.classList.remove('active');
-        menuCheck.checked = false;
-      }
-    });
+  function openMenu() {
+    navMenu.classList.add('menu-open');
+    navMenu.classList.add('active');
+    // CSS ke !important ko bhi hara dega
+    navMenu.style.setProperty('display', 'flex', 'important');
+    setTimeout(updateCenterPop, 60);
+  }
+  function closeMenu() {
+    navMenu.classList.remove('menu-open');
+    navMenu.classList.remove('active');
+    navMenu.style.setProperty('display', 'none', 'important');
+  }
+  function toggleMenu() {
+    if (navMenu.classList.contains('menu-open')) closeMenu();
+    else openMenu();
   }
 
-  // 2. AUTO CENTER POP - Jo pill bich me aayega, wohi bada hoga
+  // Click + Touch dono pe chalega
+  menuBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    toggleMenu();
+  });
+  menuBtn.addEventListener('touchstart', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    toggleMenu();
+  }, { passive: false });
+
+  // Pill pe click -> band
+  navMenu.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      closeMenu();
+    });
+  });
+
+  // Bahar click -> band
+  document.addEventListener('click', function(e) {
+    if (navMenu.classList.contains('menu-open') && !navMenu.contains(e.target) && e.target !== menuBtn) {
+      closeMenu();
+    }
+  });
+
+  // CENTER POP
   function updateCenterPop() {
-    if (!navMenu) return;
     const links = navMenu.querySelectorAll('a');
     if (!links.length) return;
-
     const menuRect = navMenu.getBoundingClientRect();
     const centerY = menuRect.top + menuRect.height / 2;
-
-    let closest = null;
-    let closestDist = 10000;
-
+    let closest = null, closestDist = 10000;
     links.forEach(function(a) {
       const r = a.getBoundingClientRect();
-      const pillCenter = r.top + r.height / 2;
-      const dist = Math.abs(pillCenter - centerY);
-      if (dist < closestDist) {
-        closestDist = dist;
-        closest = a;
-      }
+      const dist = Math.abs((r.top + r.height / 2) - centerY);
+      if (dist < closestDist) { closestDist = dist; closest = a; }
     });
-
     links.forEach(a => a.classList.remove('pop'));
     if (closest) closest.classList.add('pop');
   }
+  navMenu.addEventListener('scroll', updateCenterPop, { passive: true });
+  navMenu.addEventListener('touchmove', updateCenterPop, { passive: true });
 
-  if (navMenu) {
-    navMenu.addEventListener('scroll', updateCenterPop, { passive: true });
-    navMenu.addEventListener('touchmove', updateCenterPop, { passive: true });
-    navMenu.addEventListener('touchend', function() {
-      setTimeout(updateCenterPop, 100);
-    });
-  }
-
-  // 3. CERTIFICATE MODAL
+  // CERTIFICATE
   const certModal = document.getElementById('certModal');
   const certImage = document.getElementById('certImage');
-  const certModalImg = document.getElementById('certModalImg');
-  const certModalDownload = document.getElementById('certModalDownload');
-
   window.openCertView = function() {
     if (!certModal || !certImage) return;
-    if (certModalImg) certModalImg.src = certImage.src;
-    if (certModalDownload) certModalDownload.href = certImage.src;
+    document.getElementById('certModalImg').src = certImage.src;
+    document.getElementById('certModalDownload').href = certImage.src;
     certModal.style.display = 'flex';
   };
-
   window.closeCertView = function() {
     if (certModal) certModal.style.display = 'none';
   };
 
-  // 4. SMOOTH SCROLL
-  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-    anchor.addEventListener('click', function(e) {
-      const targetId = anchor.getAttribute('href');
-      if (targetId && targetId.length > 1) {
-        const target = document.querySelector(targetId);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      const id = a.getAttribute('href');
+      if (id && id.length > 1) {
+        const t = document.querySelector(id);
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
       }
     });
   });
-
-  console.log('JS Loaded - Menu Fixed');
 });
