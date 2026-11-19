@@ -1,4 +1,4 @@
-// FULL JS - Manual Scroll + Centre Pop + Navbar jaisa BG
+// FULL JS - Box bich me fixed, pills andar scroll + Centre Pop
 document.addEventListener('DOMContentLoaded', function() {
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navLinks');
@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // ===== CENTRE POP =====
   function updateCenterPop() {
     const links = navMenu.querySelectorAll('a');
     if (!links.length) return;
@@ -60,9 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (closest) closest.classList.add('pop');
   }
 
-  // ===== MANUAL DRAG SCROLL - CSS atak bhi jaye toh ye chalega =====
   let startY = 0, startScroll = 0, isDragging = false;
-
   navMenu.addEventListener('touchstart', function(e) {
     isDragging = true;
     startY = e.touches[0].clientY;
@@ -72,8 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
   navMenu.addEventListener('touchmove', function(e) {
     if (!isDragging) return;
     const y = e.touches[0].clientY;
-    const diff = startY - y; // upar swipe = neeche scroll
-    navMenu.scrollTop = startScroll + diff;
+    navMenu.scrollTop = startScroll + (startY - y);
     updateCenterPop();
   }, { passive: true });
 
@@ -83,13 +79,10 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   navMenu.addEventListener('scroll', updateCenterPop, { passive: true });
-
-  // Mouse wheel se bhi scroll
   navMenu.addEventListener('wheel', function() {
     setTimeout(updateCenterPop, 50);
   }, { passive: true });
 
-  // CERTIFICATE
   const certModal = document.getElementById('certModal');
   const certImage = document.getElementById('certImage');
   window.openCertView = function() {
@@ -102,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (certModal) certModal.style.display = 'none';
   };
 
-  // SMOOTH SCROLL
   document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     a.addEventListener('click', function(e) {
       const id = a.getAttribute('href');
